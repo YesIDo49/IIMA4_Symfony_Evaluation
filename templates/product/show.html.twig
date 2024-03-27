@@ -29,7 +29,9 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ product.photo }}</td>
+                <td>
+                    <img src="{{ asset('uploads/'~ product.photo) }}" style="max-width: 100px;">
+                </td>
             </tr>
         </tbody>
     </table>

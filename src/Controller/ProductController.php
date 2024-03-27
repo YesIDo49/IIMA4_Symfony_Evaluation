@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class ProductController extends AbstractController
@@ -22,6 +24,26 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('photo')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'An error occurred while uploading the image');
+                    return $this->redirectToRoute('app_product_index');
+                }
+
+                $product->setPhoto($newFilename);
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -41,7 +63,29 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('photo')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'An error occurred while uploading the image');
+                    return $this->redirectToRoute('app_product_index');
+                }
+
+                $product->setPhoto($newFilename);
+            }
+            
             $entityManager->flush();
+
+            $this->addFlash('success', 'Product updated successfully');
 
             return $this->redirectToRoute('app_product_show', [
                 'id' => $product->getId()
