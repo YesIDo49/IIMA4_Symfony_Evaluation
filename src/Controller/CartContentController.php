@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\CartContent;
 use App\Form\CartContentType;
 use App\Repository\CartContentRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/cart/content')]
 class CartContentController extends AbstractController
@@ -23,23 +25,56 @@ class CartContentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_cart_content_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ProductController $product): Response
     {
         $cartContent = new CartContent();
-        $form = $this->createForm(CartContentType::class, $cartContent);
-        $form->handleRequest($request);
+        $cartContent->setCart($this->getUser());
+        $cartContent->setQuantity(1);
+//        $cartContent->setProduct($product->id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($cartContent);
-            $entityManager->flush();
+        $entityManager->persist($cartContent);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
+
+        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+    
+    #[IsGranted('ROLE_USER')]
+    #[Route('/add-to-cart/{productId}', name: 'app_add_to_cart', methods: ['GET'])]
+    public function addToCart(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository, int $productId): Response
+    {
+        $product = $productRepository->find($productId);
+        $user = $this->getUser();
+
+        // Supposez que vous voulez utiliser le dernier panier de l'utilisateur.
+        $carts = $user->getCarts();
+        $cart = $carts->last();
+
+        if (!$product) {
+            throw $this->createNotFoundException('Product not found');
         }
 
-        return $this->render('cart_content/new.html.twig', [
-            'cart_content' => $cartContent,
-            'form' => $form,
-        ]);
+        $existingCartItem = $cart->getCartContents()->filter(function (CartContent $cartContent) use ($product) {
+            return $cartContent->getProduct() === $product;
+        })->first();
+
+        if ($existingCartItem) {
+            // If the product exists, increment the quantity
+            $existingCartItem->setQuantity($existingCartItem->getQuantity() + 1);
+        } else {
+            // If the product doesn't exist, create a new CartContent entry
+            $cartContent = new CartContent();
+            $cartContent->setCart($cart);
+            $cartContent->setQuantity(1);
+            $cartContent->setProduct($product);
+            $cartContent->setDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
+
+            $entityManager->persist($cartContent);
+        }
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_product_index');
     }
 
     #[Route('/{id}', name: 'app_cart_content_show', methods: ['GET'])]
