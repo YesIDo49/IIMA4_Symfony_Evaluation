@@ -108,7 +108,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/product/delete/{id}', name: 'app_product_delete')]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
