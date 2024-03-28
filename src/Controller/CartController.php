@@ -47,6 +47,19 @@ class CartController extends AbstractController
       ]);
     }
 
+    #[IsGranted('ROLE_USER')]
+    #[Route('/account', name: 'app_cart_account', methods: ['GET'])]
+    public function account(CartRepository $cartRepository): Response
+    {
+        return $this->render('user/account.html.twig', [
+            'carts' => $cartRepository->createQueryBuilder('c')
+                ->where('c.state = 1')
+                ->orderBy('c.purchase_date', 'DESC')
+                ->getQuery()
+                ->getResult()
+        ]);
+    }
+
     #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
