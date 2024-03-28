@@ -20,10 +20,10 @@
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }}</td>
-                <td>{{ product.stock }}</td>
                 <td>
                     <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }}" style="width: 100px;">
                 </td>
+                <td>{{ product.stock }}</td>
                 <td>
                     <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
