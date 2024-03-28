@@ -31,9 +31,7 @@ class CartController extends AbstractController
         if (!$cart) {
           return $this->redirectToRoute('app_cart_new', [], Response::HTTP_SEE_OTHER);
         } else {
-          return $this->render('cart/index.html.twig', [
-            'cart' => $cart
-          ]);
+          return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -60,8 +58,7 @@ class CartController extends AbstractController
       $entityManager->persist($cart);
       $entityManager->flush();
 
-//      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
