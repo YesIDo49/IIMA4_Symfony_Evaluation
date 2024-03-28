@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\CartContent;
 use App\Form\CartContentType;
 use App\Repository\CartContentRepository;
@@ -38,7 +39,7 @@ class CartContentController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-    
+
     #[IsGranted('ROLE_USER')]
     #[Route('/add-to-cart/{productId}', name: 'app_add_to_cart', methods: ['GET'])]
     public function addToCart(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository, int $productId): Response
@@ -46,9 +47,15 @@ class CartContentController extends AbstractController
         $product = $productRepository->find($productId);
         $user = $this->getUser();
 
-        // Supposez que vous voulez utiliser le dernier panier de l'utilisateur.
         $carts = $user->getCarts();
         $cart = $carts->last();
+
+        if (!$cart) {
+            $cart = new Cart();
+            $cart->setUser($user);
+            $cart->setState(false);
+            $entityManager->persist($cart);
+        }
 
         if (!$product) {
             throw $this->createNotFoundException('Product not found');
@@ -59,10 +66,8 @@ class CartContentController extends AbstractController
         })->first();
 
         if ($existingCartItem) {
-            // If the product exists, increment the quantity
             $existingCartItem->setQuantity($existingCartItem->getQuantity() + 1);
         } else {
-            // If the product doesn't exist, create a new CartContent entry
             $cartContent = new CartContent();
             $cartContent->setCart($cart);
             $cartContent->setQuantity(1);
