@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Entity\CartContent;
+
 
 #[IsGranted('ROLE_USER')]
 #[Route('/cart')]
@@ -62,11 +64,14 @@ class CartController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
-    public function show(Cart $cart): Response
+    public function show(Cart $cart, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
-        ]);
+      $cartContents = $entityManager->getRepository(CartContent::class)->findBy(['cart' => $cart]);
+      
+      return $this->render('cart/show.html.twig', [
+          'cart' => $cart,
+          'cartContents' => $cartContents,
+      ]);
     }
 
     #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]

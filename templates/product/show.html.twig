@@ -36,6 +36,10 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
+    {% endif %}
+
     <a href="{{ path('app_product_index') }}">back to list</a>
 
     <h2>Edit Product</h2>
