@@ -15,7 +15,8 @@
             </tr>
         </thead>
         <tbody>
-        {% for cart in carts %}
+
+        {% if cart %}
             <tr>
                 <td>{{ cart.id }}</td>
                 <td>{{ cart.state ? 'Yes' : 'No' }}</td>
@@ -29,9 +30,9 @@
             <tr>
                 <td colspan="4">no records found</td>
             </tr>
-        {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_cart_new') }}">Create new</a>
+{#    <a href="{{ path('app_cart_new') }}">Create new</a>#}
 {% endblock %}
