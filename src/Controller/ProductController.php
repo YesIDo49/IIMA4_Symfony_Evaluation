@@ -19,6 +19,14 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product_index')]
     public function index(ProductRepository $productRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        return $this->render('product/index.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -50,8 +58,8 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+        return $this->render('cart/new.html.twig', [
+            'product' => $product,
             'form' => $form,
         ]);
     }
