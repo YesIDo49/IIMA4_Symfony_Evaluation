@@ -105,6 +105,20 @@ class CartController extends AbstractController
       $cart->setState(true);
       $cart->setPurchaseDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
 
+      // Récupérer les éléments du panier
+      $cartContents = $cart->getCartContents();
+
+      // Mettre à jour le stock pour chaque produit dans le panier
+      foreach ($cartContents as $cartContent) {
+          $product = $cartContent->getProduct();
+          // Vérifier si le produit existe (c'est une bonne pratique)
+          if ($product instanceof Product) {
+              // Réduire le stock du produit par la quantité commandée
+              $product->setStock($product->getStock() - $cartContent->getQuantity());
+              $entityManager->persist($product);
+          }
+      }
+
       $entityManager->flush();
 
       $this->addFlash('success', 'Cart paid successfully');
