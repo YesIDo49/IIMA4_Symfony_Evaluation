@@ -36,7 +36,9 @@
         </tbody>
     </table>
 
-    <h2>Add Product</h2>
-    <a href="{{ path('app_product_new') }}">Create new</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h2>Add Product</h2>
+        <a href="{{ path('app_product_new') }}">Create new</a>
+    {% endif %}
 
 {% endblock %}
