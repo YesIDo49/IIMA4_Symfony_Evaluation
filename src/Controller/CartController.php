@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\CartContent;
+use App\Entity\Product;
 
 
 #[IsGranted('ROLE_USER')]
@@ -67,10 +68,19 @@ class CartController extends AbstractController
     public function show(Cart $cart, EntityManagerInterface $entityManager): Response
     {
       $cartContents = $entityManager->getRepository(CartContent::class)->findBy(['cart' => $cart]);
-      
+      $total = 0;
+
+      foreach ($cartContents as $cartContent) {
+          $product = $cartContent->getProduct();
+          if ($product instanceof Product) {
+              $total += $product->getPrice() * $cartContent->getQuantity();
+          }
+      }
+
       return $this->render('cart/show.html.twig', [
           'cart' => $cart,
           'cartContents' => $cartContents,
+          'total' => $total
       ]);
     }
 
