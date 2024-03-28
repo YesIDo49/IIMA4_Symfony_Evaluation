@@ -25,7 +25,12 @@
             </tr>
             <tr>
                 <th>Stock</th>
-                <td>{{ product.stock }}</td>
+                {% if product.stock == 0 %}
+                    <td>Out of stock</td>
+                {% else %}
+                    <td>{{ product.stock }}</td>
+                {% endif %}
+
             </tr>
             <tr>
                 <th>Photo</th>
@@ -37,7 +42,9 @@
     </table>
 
     {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
+        {% if product.stock > 0 %}
+            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
+        {% endif %}
     {% endif %}
 
     <a href="{{ path('app_product_index') }}">back to list</a>

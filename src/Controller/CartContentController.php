@@ -61,16 +61,32 @@ class CartContentController extends AbstractController
             throw $this->createNotFoundException('Product not found');
         }
 
+        if ($product->getStock() <= 0) {
+            $this->addFlash('danger', 'This product is out of stock.');
+            return $this->redirectToRoute('app_product_index');
+        }
+
+        $requestedQuantity = 1;
+        if ($product->getStock() < $requestedQuantity) {
+            $this->addFlash('danger', 'Quantity requested exceeds available stock for this product.');
+            return $this->redirectToRoute('app_product_index');
+        }
+
         $existingCartItem = $cart->getCartContents()->filter(function (CartContent $cartContent) use ($product) {
             return $cartContent->getProduct() === $product;
         })->first();
 
         if ($existingCartItem) {
-            $existingCartItem->setQuantity($existingCartItem->getQuantity() + 1);
+            if ($existingCartItem->getQuantity() + $requestedQuantity > $product->getStock()) {
+                $this->addFlash('danger', 'Quantity requested exceeds available stock for this product.');
+                return $this->redirectToRoute('app_product_index');
+            }
+
+            $existingCartItem->setQuantity($existingCartItem->getQuantity() + $requestedQuantity);
         } else {
             $cartContent = new CartContent();
             $cartContent->setCart($cart);
-            $cartContent->setQuantity(1);
+            $cartContent->setQuantity($requestedQuantity);
             $cartContent->setProduct($product);
             $cartContent->setDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
 
@@ -78,6 +94,8 @@ class CartContentController extends AbstractController
         }
 
         $entityManager->flush();
+
+        $this->addFlash('success', 'Product added to cart successfully.');
 
         return $this->redirectToRoute('app_product_index');
     }
