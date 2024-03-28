@@ -30,7 +30,8 @@
                 <th></th>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Price</th>
+                <th>Price unit</th>
+                <th>Total price</th>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +50,8 @@
                     </td>
                     <td>{{ cartContent.product.name }}</td>
                     <td>{{ cartContent.quantity }}</td>
-                    <td>{{ cartContent.product.price }}</td>
+                    <td>{{ cartContent.product.price }} €</td>
+                    <td>{{ cartContent.product.price * cartContent.quantity }} €</td>
                 </tr>
                 {% endfor %}
         </tbody>
