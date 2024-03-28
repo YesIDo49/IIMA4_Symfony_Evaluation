@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\CartRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +28,23 @@ class UserController extends AbstractController
     public function account(CartRepository $cartRepository): Response
     {
         return $this->render('user/account.html.twig', [
+            'carts' => $cartRepository->createQueryBuilder('c')
+                ->where('c.state = 1')
+                ->orderBy('c.purchase_date', 'DESC')
+                ->getQuery()
+                ->getResult()
+        ]);
+    }
+
+    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[Route('/super-admin', name: 'app_super_admin_index', methods: ['GET'])]
+    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository): Response
+    {
+        return $this->render('user/super-admin-index.html.twig', [
+            'users' => $userRepository->createQueryBuilder('u')
+                ->orderBy('u.registration_date', 'DESC')
+                ->getQuery()
+                ->getResult(),
             'carts' => $cartRepository->createQueryBuilder('c')
                 ->where('c.state = 1')
                 ->orderBy('c.purchase_date', 'DESC')
