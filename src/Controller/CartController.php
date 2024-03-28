@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Entity\CartContent;
+use App\Entity\Product;
+
 
 #[IsGranted('ROLE_USER')]
 #[Route('/cart')]
@@ -28,9 +31,7 @@ class CartController extends AbstractController
         if (!$cart) {
           return $this->redirectToRoute('app_cart_new', [], Response::HTTP_SEE_OTHER);
         } else {
-          return $this->render('cart/index.html.twig', [
-            'cart' => $cart
-          ]);
+          return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -57,16 +58,27 @@ class CartController extends AbstractController
       $entityManager->persist($cart);
       $entityManager->flush();
 
-//      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
-    public function show(Cart $cart): Response
+    public function show(Cart $cart, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
-        ]);
+      $cartContents = $entityManager->getRepository(CartContent::class)->findBy(['cart' => $cart]);
+      $total = 0;
+
+      foreach ($cartContents as $cartContent) {
+          $product = $cartContent->getProduct();
+          if ($product instanceof Product) {
+              $total += $product->getPrice() * $cartContent->getQuantity();
+          }
+      }
+
+      return $this->render('cart/show.html.twig', [
+          'cart' => $cart,
+          'cartContents' => $cartContents,
+          'total' => $total
+      ]);
     }
 
     #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]

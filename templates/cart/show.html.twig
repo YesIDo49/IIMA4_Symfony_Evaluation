@@ -22,6 +22,42 @@
         </tbody>
     </table>
 
+
+    <h2>Cart Contents</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% if cart.cartContents is empty %}
+                <tr>
+                    <td colspan="4">Your cart is empty</td>
+                </tr>
+            {% endif %}
+
+            {% if cartContents is not empty %}
+                {% for cartContent in cartContents %}
+                <tr>
+                    <td>
+                        <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }}" style="width: 50px;">
+                    </td>
+                    <td>{{ cartContent.product.name }}</td>
+                    <td>{{ cartContent.quantity }}</td>
+                    <td>{{ cartContent.product.price }}</td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total :</h3>
+    <p>{{ total }} €</p>
+    {% endif %}
+
     <a href="{{ path('app_cart_pay', {'id': cart.id}) }}">pay</a>
 
     <a href="{{ path('app_cart_index') }}">back to list</a>
