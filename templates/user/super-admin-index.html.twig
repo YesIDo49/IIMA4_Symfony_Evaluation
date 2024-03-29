@@ -45,15 +45,21 @@
         </thead>
         <tbody>
 
-        {% for todayUser in todayUsers %}
-            <tr>
-                <td>{{ todayUser.id }}</td>
-                <td>{{ todayUser.name }}</td>
-                <td>{{ todayUser.firstname }}</td>
-                <td>{{ todayUser.email }}</td>
-                <td>{{ todayUser.registrationDate|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        {% endfor %}
+        {% if todayUsers is empty %}
+        <tr>
+            <td colspan="5">No new user today...</td>
+        </tr>
+        {% else %}
+            {% for todayUser in todayUsers %}
+                <tr>
+                    <td>{{ todayUser.id }}</td>
+                    <td>{{ todayUser.name }}</td>
+                    <td>{{ todayUser.firstname }}</td>
+                    <td>{{ todayUser.email }}</td>
+                    <td>{{ todayUser.registrationDate|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 
