@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\CartRepository;
 use App\Repository\UserRepository;
-use Cassandra\Date;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,33 +38,26 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/super-admin', name: 'app_super_admin_index', methods: ['GET'])]
-    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository): Response
+    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository, EntityManagerInterface $entityManager): Response
     {
-        $today = new \DateTime("now");
-//        $test = new Date;
-//        $startOfDay = $today->format('Y-m-d 00:00:00');
-//        $endOfDay = $today->format('Y-m-d 23:59:59');
+        $today = (new \DateTime("now"))->format('Y-m-d');
+        $users = $userRepository->findAll();
+        $todayUsers = [];
 
+        foreach ($users as $user) {
+            $registrationDate = $user->getRegistrationDate()->format('Y-m-d');
+
+            if ($registrationDate == $today) {
+                $todayUsers[] = $user;
+            }
+        }
 
         return $this->render('user/super-admin-index.html.twig', [
-//            'users' => $userRepository->createQueryBuilder('u')
-//                ->orderBy('u.registration_date', 'DESC')
-//                ->getQuery()
-//                ->getResult(),
-//            'users' => $userRepository->createQueryBuilder('u')
-//                ->where('u.registration_date >= :startOfDay')
-//                ->andWhere('u.registration_date <= :endOfDay')
-//                ->setParameter('startOfDay', $startOfDay)
-//                ->setParameter('endOfDay', $endOfDay)
-//                ->orderBy('u.registration_date', 'DESC')
-//                ->getQuery()
-//                ->getResult(),
             'users' => $userRepository->createQueryBuilder('u')
-                ->where('u.registration_date = :$today')
-                ->setParameter('$today', $today)
                 ->orderBy('u.registration_date', 'DESC')
                 ->getQuery()
                 ->getResult(),
+            'todayUsers' => $todayUsers,
             'carts' => $cartRepository->createQueryBuilder('c')
                 ->where('c.state = 1')
                 ->orderBy('c.purchase_date', 'DESC')

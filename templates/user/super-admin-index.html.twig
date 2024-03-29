@@ -31,6 +31,32 @@
         </tbody>
     </table>
 
+    <h2>Today's New User</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Firstname</th>
+            <th>Email</th>
+            <th>Registration date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for todayUser in todayUsers %}
+            <tr>
+                <td>{{ todayUser.id }}</td>
+                <td>{{ todayUser.name }}</td>
+                <td>{{ todayUser.firstname }}</td>
+                <td>{{ todayUser.email }}</td>
+                <td>{{ todayUser.registrationDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
     <h2>Cart List</h2>
     <table class="table">
         <thead>
@@ -50,7 +76,6 @@
                 <td>{{ cart.id }}</td>
                 <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
                 <td>{{ cart.user.email }}</td>
-{#                <td>{{ test|date('Y-m-d H:i:s') }}</td>#}
                 <td>{{ cart.purchaseDate|date('Y-m-d H:i:s') }}</td>
                 <td>{{ cart.purchaseDate|date('Y-m-d') }}</td>
                 <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
