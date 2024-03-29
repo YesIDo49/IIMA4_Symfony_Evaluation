@@ -52,6 +52,10 @@ class UserController extends AbstractController
             }
         }
 
+        usort($todayUsers, function($a, $b) {
+            return $b->getRegistrationDate() <=> $a->getRegistrationDate();
+        });
+
         return $this->render('user/super-admin-index.html.twig', [
             'users' => $userRepository->createQueryBuilder('u')
                 ->orderBy('u.registration_date', 'DESC')
