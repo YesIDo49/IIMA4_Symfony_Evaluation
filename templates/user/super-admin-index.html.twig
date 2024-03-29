@@ -31,6 +31,38 @@
         </tbody>
     </table>
 
+    <h2>Today's New User</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Firstname</th>
+            <th>Email</th>
+            <th>Registration date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% if todayUsers is empty %}
+        <tr>
+            <td colspan="5">No new user today...</td>
+        </tr>
+        {% else %}
+            {% for todayUser in todayUsers %}
+                <tr>
+                    <td>{{ todayUser.id }}</td>
+                    <td>{{ todayUser.name }}</td>
+                    <td>{{ todayUser.firstname }}</td>
+                    <td>{{ todayUser.email }}</td>
+                    <td>{{ todayUser.registrationDate|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
     <h2>Cart List</h2>
     <table class="table">
         <thead>
@@ -38,6 +70,7 @@
             <th>Id</th>
             <th>User</th>
             <th>Email</th>
+            <th>Total</th>
             <th>Purchase date</th>
             <th>Actions</th>
         </tr>
@@ -50,6 +83,7 @@
                 <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
                 <td>{{ cart.user.email }}</td>
                 <td>{{ cart.purchaseDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ cart.purchaseDate|date('Y-m-d') }}</td>
                 <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
             </tr>
         {% endfor %}

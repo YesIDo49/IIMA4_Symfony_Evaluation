@@ -38,13 +38,30 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/super-admin', name: 'app_super_admin_index', methods: ['GET'])]
-    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository): Response
+    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository, EntityManagerInterface $entityManager): Response
     {
+        $today = (new \DateTime("now"))->format('Y-m-d');
+        $users = $userRepository->findAll();
+        $todayUsers = [];
+
+        foreach ($users as $user) {
+            $registrationDate = $user->getRegistrationDate()->format('Y-m-d');
+
+            if ($registrationDate == $today) {
+                $todayUsers[] = $user;
+            }
+        }
+
+        usort($todayUsers, function($a, $b) {
+            return $b->getRegistrationDate() <=> $a->getRegistrationDate();
+        });
+
         return $this->render('user/super-admin-index.html.twig', [
             'users' => $userRepository->createQueryBuilder('u')
                 ->orderBy('u.registration_date', 'DESC')
                 ->getQuery()
                 ->getResult(),
+            'todayUsers' => $todayUsers,
             'carts' => $cartRepository->createQueryBuilder('c')
                 ->where('c.state = 1')
                 ->orderBy('c.purchase_date', 'DESC')
