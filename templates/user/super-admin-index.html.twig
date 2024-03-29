@@ -38,6 +38,7 @@
             <th>Id</th>
             <th>User</th>
             <th>Email</th>
+            <th>Total</th>
             <th>Purchase date</th>
             <th>Actions</th>
         </tr>
@@ -49,7 +50,9 @@
                 <td>{{ cart.id }}</td>
                 <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
                 <td>{{ cart.user.email }}</td>
+{#                <td>{{ test|date('Y-m-d H:i:s') }}</td>#}
                 <td>{{ cart.purchaseDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ cart.purchaseDate|date('Y-m-d') }}</td>
                 <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
             </tr>
         {% endfor %}
