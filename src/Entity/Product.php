@@ -32,6 +32,7 @@ class Product
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255, nullable: true)]
