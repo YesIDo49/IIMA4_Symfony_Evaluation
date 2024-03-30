@@ -13,20 +13,85 @@
             </tr>
             <tr>
                 <th>State</th>
-                <td>{{ cart.state ? 'Yes' : 'No' }}</td>
+                <td>{{ cart.state ? 'Paid' : 'Ongoing' }}</td>
             </tr>
-            <tr>
-                <th>Purchase_date</th>
-                <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            {% if cart.state == true %}
+                <tr>
+                    <th>Purchase date</th>
+                    <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% endif %}
+
         </tbody>
     </table>
 
-    <a href="{{ path('app_cart_pay', {'id': cart.id}) }}">pay</a>
 
-    <a href="{{ path('app_cart_index') }}">back to list</a>
+    <h2>Cart Contents</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price unit</th>
+                <th>Total price</th>
+                {% if cart.state == false %}
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
 
-    <a href="{{ path('app_cart_edit', {'id': cart.id}) }}">edit</a>
+            {% if cart.cartContents is empty %}
+                <tr>
+                    <td colspan="6">Your cart is empty</td>
+                </tr>
+            {% endif %}
 
-    {{ include('cart/_delete_form.html.twig') }}
+            {% if cartContents is not empty %}
+                {% for cartContent in cartContents %}
+                <tr>
+                    <td>
+                        <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }}" style="width: 50px;">
+                    </td>
+                    <td>{{ cartContent.product.name }}</td>
+                    <td>
+                        {% if cartContent.quantity > 1 and cart.state == false %}
+                            <a href="{{ path('app_cart_content_minus', {'id': cartContent.id}) }}" class="btn btn-primary">-</a>
+                        {% endif %}
+                        {{ cartContent.quantity }}
+                        {% if cart.state == false %}
+                            <a href="{{ path('app_cart_content_plus', {'id': cartContent.id}) }}" class="btn btn-primary">+</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ cartContent.product.price }} €</td>
+                    <td>{{ cartContent.product.price * cartContent.quantity }} €</td>
+                    {% if cart.state == false %}
+                        <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    {% if cartContents is not empty %}
+        <h3>Total :</h3>
+        <p>{{ total }} €</p>
+        <a class="btn btn-primary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay</a>
+    {% endif %}
+
+    {% if cartContents is not empty %}
+        {{ include('cart/_delete_form.html.twig') }}
+    {% endif %}
+    
+    {% if cart.state == false %}
+        <a href="{{ path('app_cart_pay', {'id': cart.id}) }}">pay</a>
+        <a href="{{ path('app_product_index') }}">back to product list</a>
+
+    {% endif %}
+
+    {% if cart.state == true %}
+        <a href="{{ path('app_cart_account') }}">back to cart list</a>
+    {% endif %}
+
 {% endblock %}

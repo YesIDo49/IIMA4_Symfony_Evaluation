@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My account{% endblock %}
+
+{% block body %}
+    <h1>My account</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>State</th>
+                <th>Purchase_date</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <h2>Order History</h2>
+        {% if carts is empty %}
+            <tr>
+                <td colspan="4">no past carts</td>
+            </tr>
+        {% else %}
+            {% for cart in carts %}
+                {% if cart %}
+                    <tr>
+                        <td>{{ cart.id }}</td>
+                        <td>{{ cart.state ? 'Yes' : 'No' }}</td>
+                        <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ totals[cart.id] }} €</td>
+                        <td>
+                            <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+    <h2>Edit Account</h2>
+    <a href="{{ path('app_user_edit', {'id': app.user.id}) }}">edit</a>
+    
+{% endblock %}

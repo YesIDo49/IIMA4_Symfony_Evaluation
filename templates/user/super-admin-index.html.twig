@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Super Admin Page</h1>
+
+    <h2>User List</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Firstname</th>
+            <th>Email</th>
+            <th>Registration date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.registrationDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Today's New User</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Firstname</th>
+            <th>Email</th>
+            <th>Registration date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% if todayUsers is empty %}
+        <tr>
+            <td colspan="5">No new user today...</td>
+        </tr>
+        {% else %}
+            {% for todayUser in todayUsers %}
+                <tr>
+                    <td>{{ todayUser.id }}</td>
+                    <td>{{ todayUser.name }}</td>
+                    <td>{{ todayUser.firstname }}</td>
+                    <td>{{ todayUser.email }}</td>
+                    <td>{{ todayUser.registrationDate|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+    <h2>Unpurchased carts :</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for cart in carts %}
+            <tr>
+                <td>{{ cart.id }}</td>
+                <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
+                <td>{{ cart.user.email }}</td>
+                
+                <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

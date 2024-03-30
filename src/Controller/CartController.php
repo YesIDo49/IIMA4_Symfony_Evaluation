@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Entity\CartContent;
+use App\Entity\Product;
+
 
 #[IsGranted('ROLE_USER')]
 #[Route('/cart')]
@@ -28,9 +31,7 @@ class CartController extends AbstractController
         if (!$cart) {
           return $this->redirectToRoute('app_cart_new', [], Response::HTTP_SEE_OTHER);
         } else {
-          return $this->render('cart/index.html.twig', [
-            'cart' => $cart
-          ]);
+          return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -57,35 +58,46 @@ class CartController extends AbstractController
       $entityManager->persist($cart);
       $entityManager->flush();
 
-//      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
-    public function show(Cart $cart): Response
+    public function show(Cart $cart, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
-        ]);
-    }
+      $cartContents = $entityManager->getRepository(CartContent::class)->findBy(['cart' => $cart]);
+      $total = 0;
 
-    #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
-    {
-      $form = $this->createForm(CartType::class, $cart);
-      $form->handleRequest($request);
-
-      if ($form->isSubmitted() && $form->isValid() && !$cart->isState()) {
-          $entityManager->flush();
-
-          return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      foreach ($cartContents as $cartContent) {
+          $product = $cartContent->getProduct();
+          if ($product instanceof Product) {
+              $total += $product->getPrice() * $cartContent->getQuantity();
+          }
       }
 
-      return $this->render('cart/edit.html.twig', [
+      return $this->render('cart/show.html.twig', [
           'cart' => $cart,
-          'form' => $form,
+          'cartContents' => $cartContents,
+          'total' => $total
       ]);
     }
+
+    // #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
+    // {
+    //   $form = $this->createForm(CartType::class, $cart);
+    //   $form->handleRequest($request);
+
+    //   if ($form->isSubmitted() && $form->isValid() && !$cart->isState()) {
+    //       $entityManager->flush();
+
+    //       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    //   }
+
+    //   return $this->render('cart/edit.html.twig', [
+    //       'cart' => $cart,
+    //       'form' => $form,
+    //   ]);
+    // }
 
     #[Route('/{id}/pay', name: 'app_cart_pay', methods: ['GET', 'POST'])]
     public function pay(Cart $cart, EntityManagerInterface $entityManager): Response
@@ -93,9 +105,25 @@ class CartController extends AbstractController
       $cart->setState(true);
       $cart->setPurchaseDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
 
+      // Récupérer les éléments du panier
+      $cartContents = $cart->getCartContents();
+
+      // Mettre à jour le stock pour chaque produit dans le panier
+      foreach ($cartContents as $cartContent) {
+          $product = $cartContent->getProduct();
+          // Vérifier si le produit existe (c'est une bonne pratique)
+          if ($product instanceof Product) {
+              // Réduire le stock du produit par la quantité commandée
+              $product->setStock($product->getStock() - $cartContent->getQuantity());
+              $entityManager->persist($product);
+          }
+      }
+
       $entityManager->flush();
 
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      $this->addFlash('success', 'Cart paid successfully');
+
+      return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
     }
 
     #[IsGranted('ROLE_ADMIN')]
@@ -106,6 +134,8 @@ class CartController extends AbstractController
           $entityManager->remove($cart);
           $entityManager->flush();
       }
+
+      $this->addFlash('success', 'Cart cleared successfully');
 
       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
