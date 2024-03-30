@@ -44,10 +44,10 @@
             {% endif %}
 
             {% if cartContents is not empty %}
-                {% for cart_content in cartContents %}
+                {% for cartContent in cartContents %}
                 <tr>
                     <td>
-                        <img src="{{ asset('uploads/'~ cart_content.product.photo) }}" alt="{{ cart_content.product.name }}" style="width: 50px;">
+                        <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }}" style="width: 50px;">
                     </td>
                     <td>{{ cartContent.product.name }}</td>
                     <td>{{ cartContent.quantity }}</td>
