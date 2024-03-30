@@ -19,7 +19,7 @@
         {% if cart %}
             <tr>
                 <td>{{ cart.id }}</td>
-                <td>{{ cart.state ? 'Yes' : 'No' }}</td>
+                <td>{{ cart.state ? 'Paid' : 'Ongoing' }}</td>
                 <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
