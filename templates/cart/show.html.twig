@@ -75,4 +75,8 @@
 
     <a class="btn btn-primary" href="{{ path('app_cart_index') }}">Continue shopping</a>
 
+    {% if cartContents is not empty %}
+        {{ include('cart/_delete_form.html.twig') }}
+    {% endif %}
+    
 {% endblock %}
