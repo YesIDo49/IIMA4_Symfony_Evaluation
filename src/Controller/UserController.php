@@ -63,7 +63,7 @@ class UserController extends AbstractController
                 ->getResult(),
             'todayUsers' => $todayUsers,
             'carts' => $cartRepository->createQueryBuilder('c')
-                ->where('c.state = 1')
+                ->where('c.state = 0')
                 ->orderBy('c.purchase_date', 'DESC')
                 ->getQuery()
                 ->getResult()
