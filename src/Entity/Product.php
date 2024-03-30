@@ -111,6 +111,15 @@ class Product
         return $this;
     }
 
+    #[ORM\PostRemove]
+    public function deletePhoto(): static
+    {
+        if ($this->photo != null) {
+            unlink(__DIR__ . '/../../public/uploads/' . $this->photo);
+        }
+        return $this;
+    }
+
     /**
      * @return Collection<int, CartContent>
      */
@@ -129,7 +138,6 @@ class Product
         return $this;
     }
 
-    #[ORM\PostRemove]
     public function removeCartContent(CartContent $cartContent): static
     {
         if ($this->cartContents->removeElement($cartContent)) {
