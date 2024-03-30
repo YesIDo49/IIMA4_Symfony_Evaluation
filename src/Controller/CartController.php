@@ -123,7 +123,7 @@ class CartController extends AbstractController
 
       $this->addFlash('success', 'Cart paid successfully');
 
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
     }
 
     #[IsGranted('ROLE_ADMIN')]
