@@ -135,6 +135,8 @@ class CartController extends AbstractController
           $entityManager->flush();
       }
 
+      $this->addFlash('success', 'Cart cleared successfully');
+
       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 }

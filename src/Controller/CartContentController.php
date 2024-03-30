@@ -167,6 +167,8 @@ class CartContentController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$cartContent->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($cartContent);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Product removed from cart successfully.');
         }
 
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);

@@ -93,6 +93,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Your changes were saved');
+
             return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
         }
 
