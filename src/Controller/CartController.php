@@ -81,23 +81,23 @@ class CartController extends AbstractController
       ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
-    {
-      $form = $this->createForm(CartType::class, $cart);
-      $form->handleRequest($request);
+    // #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
+    // {
+    //   $form = $this->createForm(CartType::class, $cart);
+    //   $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid() && !$cart->isState()) {
-          $entityManager->flush();
+    //   if ($form->isSubmitted() && $form->isValid() && !$cart->isState()) {
+    //       $entityManager->flush();
 
-          return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-      }
+    //       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    //   }
 
-      return $this->render('cart/edit.html.twig', [
-          'cart' => $cart,
-          'form' => $form,
-      ]);
-    }
+    //   return $this->render('cart/edit.html.twig', [
+    //       'cart' => $cart,
+    //       'form' => $form,
+    //   ]);
+    // }
 
     #[Route('/{id}/pay', name: 'app_cart_pay', methods: ['GET', 'POST'])]
     public function pay(Cart $cart, EntityManagerInterface $entityManager): Response
@@ -123,7 +123,7 @@ class CartController extends AbstractController
 
       $this->addFlash('success', 'Cart paid successfully');
 
-      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
     }
 
     #[IsGranted('ROLE_ADMIN')]
@@ -134,6 +134,8 @@ class CartController extends AbstractController
           $entityManager->remove($cart);
           $entityManager->flush();
       }
+
+      $this->addFlash('success', 'Cart cleared successfully');
 
       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }

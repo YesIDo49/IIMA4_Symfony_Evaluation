@@ -16,20 +16,16 @@ use App\Repository\CartContentRepository;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
 
     #[IsGranted('ROLE_USER')]
     #[Route('/account', name: 'app_cart_account', methods: ['GET'])]
     public function account(CartRepository $cartRepository, CartContentRepository $cartContentRepository): Response
     {
+        $user = $this->getUser()->getId();
         $carts = $cartRepository->createQueryBuilder('c')
             ->where('c.state = 1')
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $user)
             ->orderBy('c.purchase_date', 'DESC')
             ->getQuery()
             ->getResult();
@@ -92,6 +88,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', 'Your changes were saved');
 
             return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
         }

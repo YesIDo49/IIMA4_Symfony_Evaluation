@@ -12,31 +12,30 @@
                 <th>State</th>
                 <th>Purchase_date</th>
                 <th>Total</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
 
         <h2>Order History</h2>
-        {% for cart in carts %}
-            {% if cart %}
-                <tr>
-                    <td>{{ cart.id }}</td>
-                    <td>{{ cart.state ? 'Yes' : 'No' }}</td>
-                    <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ totals[cart.id] }} €</td>
-
-                    <td>
-                        <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
-                        <a href="{{ path('app_cart_edit', {'id': cart.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">no records found</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
+        {% if carts is empty %}
+            <tr>
+                <td colspan="4">no past carts</td>
+            </tr>
+        {% else %}
+            {% for cart in carts %}
+                {% if cart %}
+                    <tr>
+                        <td>{{ cart.id }}</td>
+                        <td>{{ cart.state ? 'Yes' : 'No' }}</td>
+                        <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ totals[cart.id] }} €</td>
+                        <td>
+                            <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 

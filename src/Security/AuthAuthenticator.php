@@ -48,7 +48,7 @@ class AuthAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-         return new RedirectResponse($this->urlGenerator->generate('app_cart_new'));
+         return new RedirectResponse($this->urlGenerator->generate('app_product_index'));
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
