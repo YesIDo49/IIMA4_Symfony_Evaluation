@@ -1,0 +1,12 @@
+product:
+    title: Produit
+    name: Nom
+    description: Description
+    price: Prix
+    stock: Stock
+    out_of_stock: En rupture de stock
+    photo: Photo
+    add_to_cart: Ajouter au panier
+    back_to_list: Retour à la liste
+    edit_product: Modifier le produit
+    delete_product: Supprimer le produit

@@ -1,39 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}{{ 'product.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Product</h1>
+    <h1>{{ 'product.title'|trans }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>{{ 'product.name'|trans }}</th>
                 <td>{{ product.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>{{ 'product.description'|trans }}</th>
                 <td>{{ product.description }}</td>
             </tr>
             <tr>
-                <th>Price</th>
+                <th>{{ 'product.price'|trans }}</th>
                 <td>{{ product.price }}</td>
             </tr>
             <tr>
-                <th>Stock</th>
+                <th>{{ 'product.stock'|trans }}</th>
                 {% if product.stock == 0 %}
-                    <td>Out of stock</td>
+                    <td>{{ 'product.out_of_stock'|trans }}</td>
                 {% else %}
                     <td>{{ product.stock }}</td>
                 {% endif %}
-
             </tr>
             <tr>
-                <th>Photo</th>
+                <th>{{ 'product.photo'|trans }}</th>
                 <td>
                     <img src="{{ asset('uploads/'~ product.photo) }}" style="max-width: 100px;">
                 </td>
@@ -43,18 +38,18 @@
 
     {% if is_granted('ROLE_USER') %}
         {% if product.stock > 0 %}
-            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
+            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">{{ 'product.add_to_cart'|trans }}</a>
         {% endif %}
     {% endif %}
 
-    <a href="{{ path('app_product_index') }}">back to list</a>
+    <a href="{{ path('app_product_index') }}">{{ 'product.back_to_list'|trans }}</a>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <h2>Edit Product</h2>
+        <h2>{{ 'product.edit_product'|trans }}</h2>
 
         {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
 
-        <h2>Delete Product</h2>
+        <h2>{{ 'product.delete_product'|trans }}</h2>
         {{ include('product/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}
