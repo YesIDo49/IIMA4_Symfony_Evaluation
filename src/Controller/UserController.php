@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Repository\CartContentRepository;
 
 class UserController extends AbstractController
 {
@@ -25,14 +26,27 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/account', name: 'app_cart_account', methods: ['GET'])]
-    public function account(CartRepository $cartRepository): Response
+    public function account(CartRepository $cartRepository, CartContentRepository $cartContentRepository): Response
     {
+        $carts = $cartRepository->createQueryBuilder('c')
+            ->where('c.state = 1')
+            ->orderBy('c.purchase_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $totals = [];
+        foreach ($carts as $cart) {
+            $cartContents = $cartContentRepository->findBy(['cart' => $cart]);
+            $total = 0;
+            foreach ($cartContents as $cartContent) {
+                $total += $cartContent->getProduct()->getPrice() * $cartContent->getQuantity();
+            }
+            $totals[$cart->getId()] = $total;
+        }
+
         return $this->render('user/account.html.twig', [
-            'carts' => $cartRepository->createQueryBuilder('c')
-                ->where('c.state = 1')
-                ->orderBy('c.purchase_date', 'DESC')
-                ->getQuery()
-                ->getResult()
+            'carts' => $carts,
+            'totals' => $totals,
         ]);
     }
 
