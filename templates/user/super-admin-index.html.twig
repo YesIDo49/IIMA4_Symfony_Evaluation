@@ -63,15 +63,13 @@
         </tbody>
     </table>
 
-    <h2>Cart List</h2>
+    <h2>Unpurchased carts :</h2>
     <table class="table">
         <thead>
         <tr>
             <th>Id</th>
             <th>User</th>
             <th>Email</th>
-            <th>Total</th>
-            <th>Purchase date</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -82,8 +80,7 @@
                 <td>{{ cart.id }}</td>
                 <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
                 <td>{{ cart.user.email }}</td>
-                <td>{{ cart.purchaseDate|date('Y-m-d H:i:s') }}</td>
-                <td>{{ cart.purchaseDate|date('Y-m-d') }}</td>
+                
                 <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
             </tr>
         {% endfor %}

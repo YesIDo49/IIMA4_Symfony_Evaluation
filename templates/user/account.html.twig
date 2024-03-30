@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>State</th>
                 <th>Purchase_date</th>
+                <th>Total</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,6 +24,8 @@
                     <td>{{ cart.id }}</td>
                     <td>{{ cart.state ? 'Yes' : 'No' }}</td>
                     <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ totals[cart.id] }} €</td>
+
                     <td>
                         <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
                         <a href="{{ path('app_cart_edit', {'id': cart.id}) }}">edit</a>

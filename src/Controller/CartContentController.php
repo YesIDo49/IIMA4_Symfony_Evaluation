@@ -126,6 +126,41 @@ class CartContentController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/add', name: 'app_cart_content_plus', methods: ['GET', 'POST'])]
+    public function add(CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    {
+      $product_stock = $cartContent->getProduct()->getStock();
+      $quantity = $cartContent->getQuantity();
+
+      if ($product_stock > $quantity) {
+        $quantity += 1;
+      } else {
+        $this->addFlash('danger', 'Not enough stock');
+      }
+
+      $cartContent->setQuantity($quantity);
+      $entityManager->persist($cartContent);
+      $entityManager->flush();
+      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/minus', name: 'app_cart_content_minus', methods: ['GET', 'POST'])]
+    public function minus(CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    {
+      $quantity = $cartContent->getQuantity();
+
+      if ($quantity === 1) {
+        $this->addFlash('danger', 'Delete the product');
+      } else {
+        $quantity -= 1;
+        $cartContent->setQuantity($quantity);
+        $entityManager->persist($cartContent);
+        $entityManager->flush();
+      }
+      return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
     #[Route('/{id}', name: 'app_cart_content_delete', methods: ['POST'])]
     public function delete(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager): Response
     {
@@ -134,6 +169,6 @@ class CartContentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 }

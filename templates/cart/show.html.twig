@@ -30,14 +30,16 @@
                 <th></th>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Price</th>
+                <th>Price unit</th>
+                <th>Total price</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
 
             {% if cart.cartContents is empty %}
                 <tr>
-                    <td colspan="4">Your cart is empty</td>
+                    <td colspan="5">Your cart is empty</td>
                 </tr>
             {% endif %}
 
@@ -49,13 +51,24 @@
                     </td>
                     <td>{{ cartContent.product.name }}</td>
                     <td>{{ cartContent.quantity }}</td>
-                    <td>{{ cartContent.product.price }}</td>
+                    <td>
+                        {% if cartContent.quantity > 1 %}
+                            <a href="{{ path('app_cart_content_minus', {'id': cartContent.id}) }}" class="btn btn-primary">-</a>
+                        {% endif %}
+                        {{ cartContent.quantity }}
+                        <a href="{{ path('app_cart_content_plus', {'id': cartContent.id}) }}" class="btn btn-primary">+</a>
+                    </td>
+                    <td>{{ cartContent.product.price }} €</td>
+                    <td>{{ cartContent.product.price * cartContent.quantity }} €</td>
+                    <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
                 </tr>
                 {% endfor %}
+            {% endif %}
         </tbody>
     </table>
-    <h3>Total :</h3>
-    <p>{{ total }} €</p>
+    {% if cartContents is not empty %}
+        <h3>Total :</h3>
+        <p>{{ total }} €</p>
     {% endif %}
 
     <a href="{{ path('app_cart_pay', {'id': cart.id}) }}">pay</a>
