@@ -108,23 +108,23 @@ class CartContentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_cart_content_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CartContentType::class, $cartContent);
-        $form->handleRequest($request);
+    // #[Route('/{id}/edit', name: 'app_cart_content_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(CartContentType::class, $cartContent);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('cart_content/edit.html.twig', [
-            'cart_content' => $cartContent,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('cart_content/edit.html.twig', [
+    //         'cart_content' => $cartContent,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}/add', name: 'app_cart_content_plus', methods: ['GET', 'POST'])]
     public function add(CartContent $cartContent, EntityManagerInterface $entityManager): Response
@@ -167,6 +167,8 @@ class CartContentController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$cartContent->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($cartContent);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Product removed from cart successfully.');
         }
 
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
