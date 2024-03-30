@@ -64,6 +64,7 @@ class CartController extends AbstractController
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
     public function show(Cart $cart, EntityManagerInterface $entityManager): Response
     {
+      $user = $this->getUser();
       $cartContents = $entityManager->getRepository(CartContent::class)->findBy(['cart' => $cart]);
       $total = 0;
 
@@ -77,7 +78,8 @@ class CartController extends AbstractController
       return $this->render('cart/show.html.twig', [
           'cart' => $cart,
           'cartContents' => $cartContents,
-          'total' => $total
+          'total' => $total,
+          'currentUser' => $user
       ]);
     }
 
