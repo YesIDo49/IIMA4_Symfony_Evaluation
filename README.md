@@ -70,3 +70,9 @@ php bin/console doctrine:fixtures:load
     - ROLE_SUPER_ADMIN :
       - Email : superadmin@superadmin.com
       - Mot de passe : superadmin
+
+### Langues
+- Vous pouvez changer la langue du site. Pour ce faire, aller dans le fichier config/packages/translation.yaml et modifier la ligne suivante :
+```bash
+default_locale: fr
+```
