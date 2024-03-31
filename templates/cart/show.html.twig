@@ -60,9 +60,9 @@
                     <h3>Total : {{ total|number_format(2, ',', ' ') }} €</h3>
                 </div>
                 <div class="total__actions">
-                    {% if cart.state == false %}
-                        <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay <i class="fa-regular fa-credit-card"></i></a>
-                        {% if cartContents is not empty %}
+                    {% if cart.state == false and cart.user.id == currentUser.id  %}
+                        {% if cartContents is not empty and cart.user.id == currentUser.id %}
+                            <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay <i class="fa-regular fa-credit-card"></i></a>
                             {{ include('cart/_delete_form.html.twig') }}
                         {% endif %}
                         <a class="btn btn-tertiary" href="{{ path('app_product_index') }}">Back to shop</a>
