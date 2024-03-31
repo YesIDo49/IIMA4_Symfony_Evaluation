@@ -261,8 +261,8 @@ header .navbar__menu a:hover {
 .product {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 5rem;
   flex-direction: row;
   flex-wrap: nowrap;
   background-color: #5C4B43;
@@ -273,11 +273,13 @@ header .navbar__menu a:hover {
   margin: 1rem 0 3rem;
 }
 .product__img {
-  width: 50%;
+  width: 30%;
   object-fit: contain;
 }
 .product__img img {
   border-radius: 0.25rem;
+  width: 100%;
+  object-fit: contain;
 }
 .product__content {
   display: flex;
