@@ -1,0 +1,28 @@
+.btn{
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary{
+  background-color: $bg-secondary;
+  color: $bg-primary;
+
+  &:hover{
+    background-color: $bg-secondary-light;
+  }
+}
+
+.btn-secondary{
+  background-color: $bg-primary;
+  color: $bg-secondary;
+
+  &:hover{
+    background-color: $bg-primary-dark;
+    color: $bg-secondary;
+  }
+
+}

@@ -48,7 +48,7 @@ main {
   background-color: white;
   border-radius: 0.5rem;
   padding: 1rem;
-  width: 16rem;
+  width: 18rem;
 }
 .card-product__img {
   width: 100%;
@@ -80,6 +80,32 @@ main {
   gap: 0.5rem;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #5C4B43;
+  color: #FFE963;
+}
+.btn-primary:hover {
+  background-color: #a0896b;
+}
+
+.btn-secondary {
+  background-color: #FFE963;
+  color: #5C4B43;
+}
+.btn-secondary:hover {
+  background-color: #f9da11;
+  color: #5C4B43;
 }
 
 header {
