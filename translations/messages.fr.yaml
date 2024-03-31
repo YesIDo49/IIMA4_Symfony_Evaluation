@@ -87,6 +87,7 @@ user:
     edit_account: Modifier le compte
     history: Historique des commandes
     empty: Aucune commande trouvée
+    agree_terms: J'accepte les conditions d'utilisation
 
 super_admin:
     title: Super admin

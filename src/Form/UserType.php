@@ -16,8 +16,11 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                'label' => 'user.email',
+            ])
             ->add('password', PasswordType::class, [
+                'label' => 'user.password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -32,8 +35,12 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('name')
-            ->add('firstname')
+            ->add('name', null, [
+                'label' => 'user.name',
+            ])
+            ->add('firstname', null, [
+                'label' => 'user.firstname',
+            ])
         ;
     }
 

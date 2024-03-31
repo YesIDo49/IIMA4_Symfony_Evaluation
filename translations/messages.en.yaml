@@ -87,6 +87,7 @@ user:
     edit_account: Edit account
     history: My order history
     empty: No orders found
+    agree_terms: I agree to the terms of use
 
 super_admin:
     title: Super admin
