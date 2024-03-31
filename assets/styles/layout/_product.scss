@@ -1,5 +1,5 @@
 .product{
-  @include flex(center, center, 1rem);
+  @include flex(center, space-between, 5rem);
   background-color: $bg-secondary;
   color: white;
   border-radius: 0.5rem;
@@ -8,11 +8,13 @@
   margin: 1rem 0 3rem;
 
   &__img{
-    width: 50%;
+    width: 30%;
     object-fit: contain;
 
     img{
       border-radius: 0.25rem;
+      width: 100%;
+      object-fit: contain;
     }
   }
 

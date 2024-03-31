@@ -41,6 +41,8 @@
 
     {% if is_granted('ROLE_ADMIN') %}
 
+        <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>{{ 'product.edit_product' | trans }}</h2>
+
         {{ include('product/_form.html.twig', {'button_label': 'product.update_product' | trans }) }}
 
     {% endif %}
