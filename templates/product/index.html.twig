@@ -14,7 +14,11 @@
     <section class="list-products">
         {% for product in products %}
             <div class="card-product">
+                {% if product.photo is not null %}
                 <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image" class="card-product__img">
+                {% else %}
+                    <img src="{{ asset('uploads/placeholder.png') }}" alt="{{ product.name }} placeholder" class="card-product__img">
+                {% endif %}
                 <div class="card-product__content">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price|number_format(2, ',', ' ') }} €</p>

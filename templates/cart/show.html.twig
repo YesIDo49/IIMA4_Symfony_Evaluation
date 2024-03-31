@@ -31,7 +31,11 @@
                 {% for cartContent in cartContents %}
                     <tr>
                         <td>
-                            <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }} image" style="width: 50px;">
+                            {% if cartContent.product.photo is not null %}
+                                <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }} image" style="width: 50px;">
+                            {% else %}
+                                <img src="{{ asset('uploads/placeholder.png') }}" alt="{{ cartContent.product.name }} placeholder" style="width: 50px;">
+                            {% endif %}
                             <span>{{ cartContent.product.name }}</span>
                         </td>
                         <td>
