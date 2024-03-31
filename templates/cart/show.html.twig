@@ -14,7 +14,7 @@
                 <th>Quantity</th>
                 <th>Unit price</th>
                 <th>Total price</th>
-                {% if cart.state == false %}
+                {% if cart.state == false and cart.user.id == currentUser.id %}
                     <th>Actions</th>
                 {% endif %}
             </tr>
