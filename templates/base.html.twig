@@ -53,6 +53,17 @@
                 <p class="alert alert-{{type}} ">{{ m }}</p>
             {% endfor %}
         {% endfor %}
+    <main>
         {% block body %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="footer__banner">
+            <img src="{{ asset('img/banner/footer.png') }}" alt="footer-img">
+        </div>
+        <div class="footer__content">
+            <p>This website is inspired by the Kirby Café</p>
+            <p>Owned by Nintendo / HAL Laboratory, Inc.</p>
+        </div>
+    </footer>
     </body>
 </html>

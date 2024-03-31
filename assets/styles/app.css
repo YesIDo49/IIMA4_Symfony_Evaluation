@@ -4,10 +4,15 @@ body {
   font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 p, ul {
   margin-bottom: 0;
+}
+
+main {
+  min-height: 60vh;
 }
 
 header {
@@ -80,6 +85,27 @@ header .navbar__menu a {
 header .navbar__menu a:hover {
   color: #5C4B43;
   background-color: #FFE963;
+}
+
+.footer__banner {
+  overflow: hidden;
+  margin-bottom: -20px;
+  gap: 2rem;
+}
+.footer img {
+  position: relative;
+  min-width: 800px;
+  width: 100%;
+  height: auto;
+}
+.footer__content {
+  background-color: #5C4B43;
+  padding: 2rem 0;
+}
+.footer__content p {
+  color: white;
+  font-size: 14px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=app.css.map */
