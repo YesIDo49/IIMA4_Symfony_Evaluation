@@ -54,6 +54,7 @@ APP_ENV=prod
 ```bash
 php bin/console doctrine:fixtures:load
 ```
+- Vous pouvez ajouter l'option `--append` pour ajouter les fixtures sans supprimer les données déjà existantes
 
 ### Comptes
 
@@ -69,4 +70,3 @@ php bin/console doctrine:fixtures:load
     - ROLE_SUPER_ADMIN :
       - Email : superadmin@superadmin.com
       - Mot de passe : superadmin
-
