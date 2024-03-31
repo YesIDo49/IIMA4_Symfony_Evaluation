@@ -42,11 +42,31 @@ symfony serve
 
 ### Mode Dev
 
-- Pour passer en mode dev, vous devez modifier la ligne suivante dans le fichier .env :
+- Pour passer en mode prod, vous devez modifier la ligne suivante dans le fichier .env :
 ```bash
-APP_ENV=dev
+APP_ENV=prod
 ```
 - A noter, les pages d'erreurs ne s'affichent qu'en mode prod
 
 ### Fixtures
+
+- Pour ajouter des données dans la base de données, vous pouvez lancer la commande suivante :
+```bash
+php bin/console doctrine:fixtures:load
+```
+
+### Comptes
+
+- Il y a 3 rôles différents :
+    - ROLE_USER
+    - ROLE_ADMIN
+    - ROLE_SUPER_ADMIN
+- Tous les comptes créés par défaut ont le rôle ROLE_USER
+- 2 comptes ont déjà été créés dans les fixtures avec les rôles ROLE_ADMIN et ROLE_SUPER_ADMIN
+    - ROLE_ADMIN : 
+      - Email : admin@admin.com
+      - Mot de passe : adminadmin
+    - ROLE_SUPER_ADMIN :
+      - Email : superadmin@superadmin.com
+      - Mot de passe : superadmin
 
