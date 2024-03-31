@@ -1,0 +1,13 @@
+.account{
+  @include flex(center, center, 1rem, column);
+  margin-bottom: 1rem;
+
+  &__content{
+    @include flex(center, center, 1rem, column);
+    width: 45%;
+    background-color: $bg-secondary;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+}

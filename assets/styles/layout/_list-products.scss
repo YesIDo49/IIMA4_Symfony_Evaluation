@@ -1,0 +1,4 @@
+.list-products{
+  @include flex(start, center, 2rem, row, wrap);
+  width: 100%;
+}

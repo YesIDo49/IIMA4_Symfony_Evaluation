@@ -1,0 +1,69 @@
+header{
+  background-color: $bg-secondary;
+  color: $bg-primary;
+  margin-bottom: 2rem;
+  .navbar{
+    @include flex(center, space-between);
+    padding: 1.5rem 13rem;
+    &__logo{
+      @include flex(center);
+
+      &__img{
+        display: flex;
+        gap: 1rem;
+
+        img{
+          width: 60px;
+          object-fit: contain;
+          &:nth-child(2){
+            width: 110px;
+          }
+        }
+      }
+      &__user{
+        display: inline-block;
+        border-radius: 5px;
+        background-color: #fff;
+        color: $bg-secondary;
+        text-align: center;
+        font-size: 14px;
+        padding: 0.4rem 0.8rem;
+        position: relative;
+        margin-left: 20px;
+
+        &::after{
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: -11px;
+          width: 0px;
+          height: 0px;
+          margin: auto;
+          border: 6px solid transparent;
+          border-right: 6px solid #fff;
+        }
+      }
+    }
+    &__menu{
+      @include flex(center, center, 1rem);
+      list-style: none;
+      font-size: 1.1rem;
+
+      a{
+        text-decoration: none;
+        color: $bg-primary;
+        transition: all 0.5s ease;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        font-weight: 500;
+
+        &:hover{
+          color: $bg-secondary;
+          background-color: $bg-primary;
+        }
+      }
+    }
+  }
+}
