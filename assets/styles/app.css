@@ -13,18 +13,29 @@ p, ul {
 
 main {
   min-height: 60vh;
+  padding: 1rem 2rem;
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.title img {
+  max-width: 4rem;
+  margin-right: 0.5rem;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+.subtitle img {
+  max-width: 3rem;
+  margin-right: 0.5rem;
 }
 
 header {

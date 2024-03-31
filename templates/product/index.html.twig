@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Shop{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">All products</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodies</h1>
 
     <section class="d-flex justify-content-around m-auto">
         {% for product in products %}
