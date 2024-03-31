@@ -1,0 +1,58 @@
+.btn{
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary{
+  background-color: $bg-secondary;
+  color: $bg-primary;
+
+  &:hover{
+    background-color: $bg-secondary-light;
+  }
+}
+
+.btn-secondary{
+  background-color: $bg-primary;
+  color: $bg-secondary;
+
+  &:hover{
+    background-color: $bg-primary-dark;
+    color: $bg-secondary;
+  }
+}
+
+.btn-tertiary{
+  background-color: $color-text-light;
+  color: $color-text-secondary;
+
+  &:hover{
+    background-color: $color-text-dark;
+    color: $color-text-secondary;
+  }
+}
+
+.btn-danger{
+  background-color: #f82c2c;
+  color: white;
+
+  &:hover{
+    background-color: #f55a5a;
+  }
+}
+
+.admin-actions{
+  @include flex(center, end, 1rem);
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.form-actions{
+  @include flex(center, start, 1rem);
+  width: 100%;
+  margin: 1rem 0;
+}

@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Register</h1>
 
     {{ form_errors(registrationForm) }}
 
@@ -16,6 +16,6 @@
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

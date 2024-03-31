@@ -3,9 +3,7 @@
 {% block title %}New Product{% endblock %}
 
 {% block body %}
-    <h1>Create new Product</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Create new Product</h1>
 
     {{ include('product/_form.html.twig') }}
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
 {% endblock %}

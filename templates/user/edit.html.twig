@@ -3,10 +3,7 @@
 {% block title %}Edit Cart{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Edit User</h1>
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_cart_account') }}">back to list</a>
-
 {% endblock %}
