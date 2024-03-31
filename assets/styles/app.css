@@ -108,6 +108,23 @@ main {
   color: #5C4B43;
 }
 
+.btn-tertiary {
+  background-color: #999;
+  color: #202020;
+}
+.btn-tertiary:hover {
+  background-color: #7d7d7d;
+  color: #202020;
+}
+
+.btn-danger {
+  background-color: #f82c2c;
+  color: white;
+}
+.btn-danger:hover {
+  background-color: #f55a5a;
+}
+
 .admin-actions {
   display: flex;
   align-items: center;
