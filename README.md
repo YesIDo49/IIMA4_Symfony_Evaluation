@@ -42,9 +42,9 @@ symfony serve
 
 ### Mode Dev
 
-- Pour passer en mode dev, vous devez modifier la ligne suivante dans le fichier .env :
+- Pour passer en mode prod, vous devez modifier la ligne suivante dans le fichier .env :
 ```bash
-APP_ENV=dev
+APP_ENV=prod
 ```
 - A noter, les pages d'erreurs ne s'affichent qu'en mode prod
 
