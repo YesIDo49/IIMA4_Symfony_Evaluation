@@ -40,7 +40,7 @@ product:
     currency: €
 
 cart:
-    title: Panier n°%id%
+    title: "Panier n°%id%"
     id: Numéro de commande
     status:
         title: Statut
@@ -96,3 +96,21 @@ super_admin:
         today: Nouveaux utilisateurs du jour
         empty: Aucun nouvel utilisateur aujourd'hui
     ongoing_carts: Commandes en cours
+
+alerts:
+    product:
+        out_of_stock: Ce produit est en rupture de stock
+        quantity: La quantité est supérieur au stock disponible pour ce produit.
+        add_to_cart: "%product% ajouté au panier avec succès."
+        minus: Veuillez supprimer le produit
+        remove_from_cart: Produit retiré du panier avec succès.
+        image: Une erreur est survenue lors de l'ajout de l'image.
+        created: Produit créé avec succès.
+        updated: Produit mis à jour avec succès.
+        deleted: Produit supprimé avec succès.
+    cart:
+        pay: Paiement effectué avec succès.
+        clear: Panier vidé avec succès.
+    user:
+        registered: Vous vous êtes inscrit avec succès.
+        updated: Compte mis à jour avec succès.

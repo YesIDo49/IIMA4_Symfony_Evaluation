@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/cart/content')]
 class CartContentController extends AbstractController
 {
 
     #[Route('/new', name: 'app_cart_content_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, ProductController $product): Response
+    public function new(EntityManagerInterface $entityManager): Response
     {
         $cartContent = new CartContent();
         $cartContent->setCart($this->getUser());
@@ -32,7 +33,7 @@ class CartContentController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/add-to-cart/{productId}', name: 'app_add_to_cart', methods: ['GET'])]
-    public function addToCart(Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository, int $productId): Response
+    public function addToCart(EntityManagerInterface $entityManager, ProductRepository $productRepository, int $productId, TranslatorInterface $translator): Response
     {
         $product = $productRepository->find($productId);
         $user = $this->getUser();
@@ -52,13 +53,13 @@ class CartContentController extends AbstractController
         }
 
         if ($product->getStock() <= 0) {
-            $this->addFlash('danger', 'This product is out of stock.');
+            $this->addFlash('danger', $translator->trans('alerts.product.out_of_stock'));
             return $this->redirectToRoute('app_product_index');
         }
 
         $requestedQuantity = 1;
         if ($product->getStock() < $requestedQuantity) {
-            $this->addFlash('danger', 'Quantity requested exceeds available stock for this product.');
+            $this->addFlash('danger', $translator->trans('alerts.product.quantity'));
             return $this->redirectToRoute('app_product_index');
         }
 
@@ -68,7 +69,7 @@ class CartContentController extends AbstractController
 
         if ($existingCartItem) {
             if ($existingCartItem->getQuantity() + $requestedQuantity > $product->getStock()) {
-                $this->addFlash('danger', 'Quantity requested exceeds available stock for this product.');
+                $this->addFlash('danger', $translator->trans('alerts.product.quantity'));
                 return $this->redirectToRoute('app_product_index');
             }
 
@@ -85,13 +86,13 @@ class CartContentController extends AbstractController
 
         $entityManager->flush();
 
-        $this->addFlash('success', 'Product added to cart successfully.');
+        $this->addFlash('success', $translator->trans('alerts.product.add_to_cart', ['%product%' => $product->getName()]));
 
         return $this->redirectToRoute('app_product_index');
     }
 
     #[Route('/{id}/add', name: 'app_cart_content_plus', methods: ['GET', 'POST'])]
-    public function add(CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    public function add(CartContent $cartContent, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
       $product_stock = $cartContent->getProduct()->getStock();
       $quantity = $cartContent->getQuantity();
@@ -99,7 +100,7 @@ class CartContentController extends AbstractController
       if ($product_stock > $quantity) {
         $quantity += 1;
       } else {
-        $this->addFlash('danger', 'Not enough stock');
+        $this->addFlash('danger', $translator->trans('alerts.product.quantity'));
       }
 
       $cartContent->setQuantity($quantity);
@@ -109,12 +110,12 @@ class CartContentController extends AbstractController
     }
 
     #[Route('/{id}/minus', name: 'app_cart_content_minus', methods: ['GET', 'POST'])]
-    public function minus(CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    public function minus(CartContent $cartContent, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
       $quantity = $cartContent->getQuantity();
 
       if ($quantity === 1) {
-        $this->addFlash('danger', 'Delete the product');
+        $this->addFlash('danger', $translator->trans('alerts.product.minus'));
       } else {
         $quantity -= 1;
         $cartContent->setQuantity($quantity);
@@ -126,13 +127,13 @@ class CartContentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cart_content_delete', methods: ['POST'])]
-    public function delete(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cartContent->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($cartContent);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Product removed from cart successfully.');
+            $this->addFlash('success', $translator->trans('alerts.product.remove_from_cart'));
         }
 
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);

@@ -40,7 +40,7 @@ product:
     currency: $
 
 cart:
-    title: Cart n°%id%
+    title: "Cart n°%id%"
     id: Order number
     status:
         title: Status
@@ -96,3 +96,21 @@ super_admin:
         today: Today's new users
         empty: No new users today
     ongoing_carts: Ongoing carts
+
+alerts:
+    product:
+        out_of_stock: This product is out of stock
+        quantity: Quantity requested exceeds available stock for this product.
+        add_to_cart: "%product% added to cart successfully."
+        minus: Please delete the product
+        remove_from_cart: Product removed from cart successfully.
+        image: An error occurred while uploading the image
+        created: Product created successfully.
+        updated: Product updated successfully.
+        deleted: Product deleted successfully.
+    cart:
+        pay: Cart paid successfully.
+        clear: Cart cleared successfully.
+    user:
+        registered: You have successfully registered.
+        updated: Your changes were saved.

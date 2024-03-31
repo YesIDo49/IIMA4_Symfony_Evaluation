@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\CartContent;
 use App\Entity\Product;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 #[IsGranted('ROLE_USER')]
@@ -70,7 +71,7 @@ class CartController extends AbstractController
     }
 
     #[Route('/{id}/pay', name: 'app_cart_pay', methods: ['GET', 'POST'])]
-    public function pay(Cart $cart, EntityManagerInterface $entityManager): Response
+    public function pay(Cart $cart, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
       $cart->setState(true);
       $cart->setPurchaseDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
@@ -87,21 +88,21 @@ class CartController extends AbstractController
 
       $entityManager->flush();
 
-      $this->addFlash('success', 'Cart paid successfully');
+      $this->addFlash('success', $translator->trans('alerts.cart.pay'));
 
       return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
     }
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
-    public function delete(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Cart $cart, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
       if ($this->isCsrfTokenValid('delete'.$cart->getId(), $request->getPayload()->get('_token'))) {
           $entityManager->remove($cart);
           $entityManager->flush();
       }
 
-      $this->addFlash('success', 'Cart cleared successfully');
+      $this->addFlash('success', $translator->trans('alerts.cart.clear'));
 
       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
