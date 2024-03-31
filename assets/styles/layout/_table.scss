@@ -1,0 +1,41 @@
+.table-layout{
+  @include flex(center, center, 1rem, column);
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.table{
+  background-color: $bg-secondary;
+  border-radius: 0.5rem;
+}
+
+.table>:not(caption)>*>* {
+  background-color: $bg-secondary;
+  border-bottom: 1px solid $bg-secondary-light;
+  color: white;
+  border-radius: 1rem;
+
+  img{
+    margin-right: 0.5rem;
+  }
+}
+
+.total{
+  width: 30%;
+  @include flex(center, center, 1rem, column);
+  margin: 1rem 0;
+  background-color: $bg-secondary;
+  color: $bg-primary;
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  &__price{
+
+  }
+
+  &__actions {
+    @include flex(center, center, 1rem, row, wrap);
+    width: 70%;
+  }
+
+}

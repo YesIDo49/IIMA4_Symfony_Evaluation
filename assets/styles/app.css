@@ -19,9 +19,8 @@ main {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
-  text-transform: capitalize;
 }
 .title img {
   max-width: 4rem;
@@ -33,7 +32,6 @@ main {
   font-weight: 500;
   margin-bottom: 1rem;
   margin-left: 1rem;
-  text-transform: capitalize;
 }
 .subtitle img {
   max-width: 3rem;
@@ -297,6 +295,56 @@ header .navbar__menu a:hover {
   gap: 0.5rem;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+
+.table-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.table {
+  background-color: #5C4B43;
+  border-radius: 0.5rem;
+}
+
+.table > :not(caption) > * > * {
+  background-color: #5C4B43;
+  border-bottom: 1px solid #a0896b;
+  color: white;
+  border-radius: 1rem;
+}
+.table > :not(caption) > * > * img {
+  margin-right: 0.5rem;
+}
+
+.total {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 1rem 0;
+  background-color: #5C4B43;
+  color: #FFE963;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.total__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 70%;
 }
 
 /*# sourceMappingURL=app.css.map */

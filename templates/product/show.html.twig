@@ -31,7 +31,7 @@
             <div class="product__content__actions">
                 {% if is_granted('ROLE_USER') %}
                     {% if product.stock > 0 %}
-                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-secondary">Add to cart</a>
+                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-secondary">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
                     {% endif %}
                 {% endif %}
                 <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">Back</a>
@@ -40,7 +40,7 @@
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Edit Product</h2>
+
 
         {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
     {% endif %}
