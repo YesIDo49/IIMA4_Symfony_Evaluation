@@ -10,7 +10,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
         $product = new Product();
         $product->setName('Large cotton tote bag pasta');
         $product->setPrice(mt_rand(1000, 10000) / 100);
