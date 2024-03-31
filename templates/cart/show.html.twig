@@ -45,7 +45,7 @@
                         </td>
                         <td>{{ cartContent.product.price|number_format(2, ',', ' ') }} €</td>
                         <td>{{ (cartContent.product.price * cartContent.quantity)|number_format(2, ',', ' ') }} €</td>
-                        {% if cart.state == false %}
+                        {% if cart.state == false and cart.user.id == currentUser.id %}
                             <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
                         {% endif %}
                     </tr>
