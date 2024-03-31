@@ -20,15 +20,14 @@
                     <p>{{ product.price|number_format(2, ',', ' ') }} €</p>
                     {% if product.stock > 0 %}
                         <h5>Stock: {{ product.stock }}</h5>
-
-                        <div class="card-product__content__links">
-                            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
-                            <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">Show Product</a>
-                        </div>
                     {% else %}
-                        <p>Out of stock</p>
+                        <h5>Out of stock</h5>
                     {% endif %}
 
+                    <div class="card-product__content__links">
+                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">Show Product</a>
+                    </div>
                 </div>
 
             </div>
