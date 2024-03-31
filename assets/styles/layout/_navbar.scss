@@ -3,13 +3,10 @@ header{
   color: $bg-primary;
   margin-bottom: 2rem;
   .navbar{
-    display: flex;
-    align-items: center;
-    padding: 1.5rem 15rem;
-    justify-content: space-between;
+    @include flex(center, space-between);
+    padding: 1.5rem 13rem;
     &__logo{
-      display: flex;
-      align-items: center;
+      @include flex(center);
       max-width: 30%;
 
       &__img{
@@ -50,10 +47,7 @@ header{
       }
     }
     &__menu{
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      justify-content: center;
+      @include flex(center, center, 1rem);
       list-style: none;
       font-size: 1.1rem;
 
