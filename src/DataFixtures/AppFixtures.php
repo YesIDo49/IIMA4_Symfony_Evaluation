@@ -11,27 +11,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $admin = new User();
-        $admin->setName('Admin');
-        $admin->setFirstname('admin');
-        $admin->setEmail('admin@admin.com');
-        $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setPassword(
-            'adminadmin'
-        );
-        $admin->setRegistrationDate(new \DateTime());
-        $manager->persist($admin);
-
-        $superAdmin = new User();
-        $superAdmin->setName('SUPER');
-        $superAdmin->setFirstname('Admin');
-        $superAdmin->setEmail('superadmin@superadmin.com');
-        $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
-        $superAdmin->setPassword(
-            'superadmin'
-        );
-        $superAdmin->setRegistrationDate(new \DateTime());
-        $manager->persist($superAdmin);
 
         $product = new Product();
         $product->setName('Large cotton tote bag pasta');
@@ -80,7 +59,6 @@ class AppFixtures extends Fixture
         $product->setDescription('Add a burst of flavor to your dishes with Ohoshisamasabei Pepper. Made from a blend of premium spices, it\'s the perfect seasoning for any meal.');
         $product->setPhoto('product6.jpg');
         $manager->persist($product);
-
 
         $manager->flush();
     }
