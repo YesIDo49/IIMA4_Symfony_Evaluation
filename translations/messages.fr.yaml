@@ -1,0 +1,117 @@
+global:
+    welcome: Bienvenue
+    nav:
+        greeting: Bonjour,
+        shop: Boutique
+        cart: Panier
+        account: Compte
+        dashboard: Tableau de bord
+        logout: Déconnexion
+        login: Connexion
+        register: Inscription
+    credits:
+        part1: Ce site est inspiré du Kirby Café
+        part2: Propriété de Nintendo / HAL Laboratory, Inc.
+
+products:
+    title: Boutique
+    goodies: Goodies
+    empty: Aucun produit trouvé
+
+product:
+    title: Produit
+    goodie: Goodie
+    id: Identifiant du produit
+    name: Nom
+    description: Description
+    price: Prix
+    stock: Stock
+    current_stock: Stock actuel
+    out_of_stock: En rupture de stock
+    image: Image
+    add_to_cart: Ajouter au panier
+    back_to_list: Retour aux produits
+    add_product: Créer un nouveau produit
+    edit_product: Modifier le produit
+    show_product: Voir le produit
+    delete_product: Supprimer le produit
+    update_product: Mettre à jour le produit
+    actions: Actions
+    currency: €
+
+cart:
+    title: "Panier n°%id%"
+    id: Numéro de commande
+    status:
+        title: Statut
+        ongoing: En cours
+        paid: Payé
+    purchase_date: Date d'achat
+    user: Utilisateur
+    email: Email
+    empty: Votre panier est vide
+    total: Total
+    currency: €
+    pay: Payer
+    clear: Vider le panier
+    back_to:
+        products: Retour aux produits
+        carts: Retour aux paniers
+    actions: Actions
+    show: Voir
+
+cart_content:
+    title: Contenu du panier
+    image: Image
+    product: Produit
+    quantity: Quantité
+    unit_price: Prix unitaire
+    total_price: Prix total
+    actions: Actions
+    currency: €
+    delete: Supprimer
+
+user:
+    id: Identifiant de l'utilisateur
+    sign_in: Veuillez vous connecter
+    register: Inscription
+    password: Mot de passe
+    remember_me: Se souvenir de moi
+    update: Mettre à jour
+    back: Retour
+    account: Mon compte
+    name: Nom
+    firstname: Prénom
+    email: Email
+    date_of_registration: Date d'inscription
+    edit_account: Modifier le compte
+    history: Historique des commandes
+    empty: Aucune commande trouvée
+    agree_terms: J'accepte les conditions d'utilisation
+
+super_admin:
+    title: Super admin
+    dashboard: Tableau de bord Super Admin
+    users:
+        all: Tous les utilisateurs
+        today: Nouveaux utilisateurs du jour
+        empty: Aucun nouvel utilisateur aujourd'hui
+    ongoing_carts: Commandes en cours
+
+alerts:
+    product:
+        out_of_stock: Ce produit est en rupture de stock
+        quantity: La quantité est supérieur au stock disponible pour ce produit.
+        add_to_cart: "%product% ajouté au panier avec succès."
+        minus: Veuillez supprimer le produit
+        remove_from_cart: Produit retiré du panier avec succès.
+        image: Une erreur est survenue lors de l'ajout de l'image.
+        created: Produit créé avec succès.
+        updated: Produit mis à jour avec succès.
+        deleted: Produit supprimé avec succès.
+    cart:
+        pay: Paiement effectué avec succès.
+        clear: Panier vidé avec succès.
+    user:
+        registered: Vous vous êtes inscrit avec succès.
+        updated: Compte mis à jour avec succès.

@@ -1,50 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My account{% endblock %}
+{% block title %}{{ 'user.account' | trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>My account</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>{{ 'user.account' | trans }}</h1>
 
     <div class="account">
         <div class="account__content">
             <div class="account__content__info">
-                <h4><span class="bold">Name : </span>{{ app.user.firstname }} <span class="uppercase">{{ app.user.firstname }}</span></h4>
-                <p><span class="bold">Email : </span>{{ app.user.email }}</p>
-                <p><span class="bold">Registered : </span>{{ app.user.registrationDate|date('Y-m-d H:i:s') }}</p>
+                <h4><span class="bold">{{ 'user.name' | trans }} : </span>{{ app.user.firstname }} <span class="uppercase">{{ app.user.firstname }}</span></h4>
+                <p><span class="bold">{{ 'user.email' | trans }} : </span>{{ app.user.email }}</p>
+                <p><span class="bold">{{ 'user.date_of_registration' | trans }} : </span>{{ app.user.registrationDate|date('Y-m-d H:i:s') }}</p>
             </div>
             <div class="account__content__actions">
-                <a href="{{ path('app_user_edit', {'id': app.user.id}) }}" class="btn btn-secondary">Edit account <i class="fa-solid fa-pencil"></i></a>
+                <a href="{{ path('app_user_edit', {'id': app.user.id}) }}" class="btn btn-secondary">{{ 'user.edit_account' | trans }} <i class="fa-solid fa-pencil"></i></a>
             </div>
         </div>
     </div>
 
-    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Order History</h2>
+    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>{{ 'user.history' | trans }}</h2>
     <section class="table-layout">
         <table class="table">
             <thead>
             <tr>
-                <th>Order number</th>
-                <th>State</th>
-                <th>Purchase date</th>
-                <th>Total</th>
-                <th>Actions</th>
+                <th>{{ 'cart.id' | trans }}</th>
+                <th>{{ 'cart.status.title' | trans }}</th>
+                <th>{{ 'cart.purchase_date' | trans }}</th>
+                <th>{{ 'cart.total' | trans }}</th>
+                <th>{{ 'cart.actions' | trans }}</th>
             </tr>
             </thead>
             <tbody>
             {% if carts is empty %}
                 <tr>
-                    <td colspan="4">no past carts</td>
+                    <td colspan="4">{{ 'user.empty' | trans }}</td>
                 </tr>
             {% else %}
                 {% for cart in carts %}
                     {% if cart %}
                         <tr>
                             <td>{{ cart.id }}</td>
-                            <td>{{ cart.state ? 'Paid' : 'Ongoing' }}</td>
+                            <td>{{ cart.state ? 'cart.status.paid' | trans : 'cart.status.ongoing' | trans }}</td>
                             <td>{{ cart.purchaseDate ? cart.purchaseDate|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ totals[cart.id]|number_format(2, ',', ' ') }} €</td>
+                            <td>{{ totals[cart.id]|number_format(2, ',', ' ') }} {{ 'cart.currency' | trans }}</td>
                             <td>
-                                <a href="{{ path('app_cart_show', {'id': cart.id}) }}" class="btn btn-secondary">Show</a>
+                                <a href="{{ path('app_cart_show', {'id': cart.id}) }}" class="btn btn-secondary">{{ 'cart.show' | trans }}</a>
                             </td>
                         </tr>
                     {% endif %}

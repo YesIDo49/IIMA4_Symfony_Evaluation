@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Product{% endblock %}
+{% block title %}{{ 'product.add_product' | trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Create new Product</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>{{ 'product.add_product' | trans }}</h1>
 
-    {{ include('product/_form.html.twig') }}
+    {{ include('product/_form.html.twig', { button_label: 'product.add_product' | trans }) }}
+
 {% endblock %}

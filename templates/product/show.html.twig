@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product {{ product.name }}{% endblock %}
+{% block title %}{{ 'product.title' | trans }} {{ product.name }}{% endblock %}
 
 {% block body %}
-    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodie</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>{{ 'product.goodie' | trans }}</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
         <div class="admin-actions">
@@ -18,30 +18,32 @@
 
         <div class="product__content">
             {% if is_granted('ROLE_ADMIN') %}
-                <p>( Product id : {{ product.id }} )</p>
+                <p>( {{ 'product.id' | trans }} : {{ product.id }} )</p>
             {% endif %}
             <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop-white.png') }}" alt="title-icon"></span>{{ product.name }}</h2>
             <p>{{ product.description }}</p>
-            <h3>{{ product.price|number_format(2, ',', ' ') }} €</h3>
+            <h3>{{ product.price|number_format(2, ',', ' ') }} {{ 'product.currency' | trans }}</h3>
             {% if product.stock == 0 %}
-                <h4>Out of stock</h4>
+                <h4>{{ 'product.out_of_stock' | trans }}</h4>
             {% else %}
-                <h4>Current stock : {{ product.stock }}</h4>
+                <h4>{{ 'product.current_stock' | trans }} : {{ product.stock }}</h4>
             {% endif %}
             <div class="product__content__actions">
                 {% if is_granted('ROLE_USER') %}
                     {% if product.stock > 0 %}
-                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-secondary">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
+                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-secondary">{{ 'product.add_to_cart' | trans }} <i class="fa-solid fa-cart-plus"></i></a>
                     {% endif %}
                 {% endif %}
-                <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">Back</a>
+                <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">{{ 'product.back_to_list' | trans }}</a>
             </div>
         </div>
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Edit Product</h2>
 
-        {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+        <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>{{ 'product.edit_product' | trans }}</h2>
+
+        {{ include('product/_form.html.twig', {'button_label': 'product.update_product' | trans }) }}
+
     {% endif %}
 {% endblock %}

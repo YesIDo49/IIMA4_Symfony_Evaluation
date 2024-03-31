@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\CartContentRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
@@ -48,7 +49,7 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/super-admin', name: 'app_super_admin_index', methods: ['GET'])]
-    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository, EntityManagerInterface $entityManager): Response
+    public function superAdminIndex(UserRepository $userRepository, CartRepository $cartRepository): Response
     {
         $today = (new \DateTime("now"))->format('Y-m-d');
         $users = $userRepository->findAll();
@@ -81,7 +82,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -89,7 +90,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your changes were saved');
+            $this->addFlash('success', $translator->trans('alerts.user.updated'));
 
             return $this->redirectToRoute('app_cart_account', [], Response::HTTP_SEE_OTHER);
         }

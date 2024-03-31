@@ -1,0 +1,117 @@
+global:
+    welcome: Welcome
+    nav:
+        greeting: Hello,
+        shop: Shop
+        cart: Cart
+        account: Account
+        dashboard: Dashboard
+        logout: Logout
+        login: Login
+        register: Register
+    credits:
+        part1: This website is inspired by the Kirby Café
+        part2: Owned by Nintendo / HAL Laboratory, Inc.
+
+products:
+    title: Shop
+    goodies: Goodies
+    empty: No products found
+
+product:
+    title: Product
+    goodie: Goodie
+    id: Product id
+    name: Name
+    description: Description
+    price: Price
+    stock: Stock
+    current_stock: Current stock
+    out_of_stock: Out of stock
+    image: Image
+    add_to_cart: Add to cart
+    back_to_list: Back to products
+    add_product: Create new product
+    edit_product: Edit product
+    show_product: Show product
+    delete_product: Delete product
+    update_product: Update product
+    actions: Actions
+    currency: $
+
+cart:
+    title: "Cart n°%id%"
+    id: Order number
+    status:
+        title: Status
+        ongoing: Ongoing
+        paid: Paid
+    purchase_date: Purchase date
+    user: User
+    email: Email
+    empty: Your cart is empty
+    total: Total
+    currency: $
+    pay: Pay
+    clear: Clear cart
+    back_to:
+        products: Back to products
+        carts: Back to carts
+    actions: Actions
+    show: Show
+
+cart_content:
+    title: Cart content
+    image: Image
+    product: Product
+    quantity: Quantity
+    unit_price: Unit price
+    total_price: Total price
+    actions: Actions
+    currency: $
+    delete: Remove
+
+user:
+    id: User id
+    sign_in: Please sign in
+    register: Register
+    password: Password
+    remember_me: Remember me
+    update: Update
+    back: Back to account
+    account: My account
+    name: Name
+    firstname: Firstname
+    email: Email
+    date_of_registration: Date of registration
+    edit_account: Edit account
+    history: My order history
+    empty: No orders found
+    agree_terms: I agree to the terms of use
+
+super_admin:
+    title: Super admin
+    dashboard: Super Admin Dashboard
+    users:
+        all: User list
+        today: Today's new users
+        empty: No new users today
+    ongoing_carts: Ongoing carts
+
+alerts:
+    product:
+        out_of_stock: This product is out of stock
+        quantity: Quantity requested exceeds available stock for this product.
+        add_to_cart: "%product% added to cart successfully."
+        minus: Please delete the product
+        remove_from_cart: Product removed from cart successfully.
+        image: An error occurred while uploading the image
+        created: Product created successfully.
+        updated: Product updated successfully.
+        deleted: Product deleted successfully.
+    cart:
+        pay: Cart paid successfully.
+        clear: Cart cleared successfully.
+    user:
+        registered: You have successfully registered.
+        updated: Your changes were saved.

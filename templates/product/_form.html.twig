@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-actions">
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-        <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">Back to products</a>
+        <button class="btn btn-primary">{{ button_label|default('product.update_product' | trans ) }}</button>
+        <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">{{ 'product.back_to_list' | trans }}</a>
     </div>
 {{ form_end(form) }}
