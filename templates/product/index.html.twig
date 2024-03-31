@@ -5,6 +5,12 @@
 {% block body %}
     <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodies</h1>
 
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin-actions">
+            <a class="btn btn-primary" href="{{ path('app_product_new') }}">Create new product</a>
+        </div>
+    {% endif %}
+
     <section class="list-products">
         {% for product in products %}
             <div class="card-product">
@@ -30,10 +36,4 @@
             <p>No products found</p>
         {% endfor %}
     </section>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <h2>Add Product</h2>
-        <a class="btn btn-primary" href="{{ path('app_product_new') }}">Create new</a>
-    {% endif %}
-
 {% endblock %}

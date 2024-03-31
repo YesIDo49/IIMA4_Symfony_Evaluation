@@ -24,5 +24,10 @@
     background-color: $bg-primary-dark;
     color: $bg-secondary;
   }
+}
 
+.admin-actions{
+  @include flex(center, end, 1rem);
+  width: 100%;
+  margin: 1rem 0;
 }

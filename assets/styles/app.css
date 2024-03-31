@@ -108,6 +108,17 @@ main {
   color: #5C4B43;
 }
 
+.admin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 1rem 0;
+}
+
 header {
   background-color: #5C4B43;
   color: #FFE963;
