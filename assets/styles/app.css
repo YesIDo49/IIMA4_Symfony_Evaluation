@@ -136,6 +136,17 @@ main {
   margin: 1rem 0;
 }
 
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 1rem 0;
+}
+
 header {
   background-color: #5C4B43;
   color: #FFE963;

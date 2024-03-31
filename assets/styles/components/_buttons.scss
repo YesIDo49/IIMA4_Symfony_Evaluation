@@ -50,3 +50,9 @@
   width: 100%;
   margin: 1rem 0;
 }
+
+.form-actions{
+  @include flex(center, start, 1rem);
+  width: 100%;
+  margin: 1rem 0;
+}
