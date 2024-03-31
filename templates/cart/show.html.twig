@@ -7,71 +7,71 @@
 
     <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Content ( {{ cart.state ? 'Paid' : 'Ongoing' }} {{ cart.state == true and cart.purchaseDate ? 'on the ' ~ cart.purchaseDate|date('Y-m-d H:i:s') : '' }} )</h2>
     <section class="table-layout">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Unit price</th>
-            <th>Total price</th>
-            {% if cart.state == false %}
-                <th>Actions</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-
-        {% if cart.cartContents is empty %}
+        <table class="table">
+            <thead>
             <tr>
-                <td colspan="6">Your cart is empty</td>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit price</th>
+                <th>Total price</th>
+                {% if cart.state == false %}
+                    <th>Actions</th>
+                {% endif %}
             </tr>
-        {% endif %}
+            </thead>
+            <tbody>
+
+            {% if cart.cartContents is empty %}
+                <tr>
+                    <td colspan="6">Your cart is empty</td>
+                </tr>
+            {% endif %}
+
+            {% if cartContents is not empty %}
+                {% for cartContent in cartContents %}
+                    <tr>
+                        <td>
+                            <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }} image" style="width: 50px;">
+                            <span>{{ cartContent.product.name }}</span>
+                        </td>
+                        <td>
+                            {% if cartContent.quantity > 1 and cart.state == false %}
+                                <a href="{{ path('app_cart_content_minus', {'id': cartContent.id}) }}" class="btn btn-secondary">-</a>
+                            {% endif %}
+                            {{ cartContent.quantity }}
+                            {% if cart.state == false %}
+                                <a href="{{ path('app_cart_content_plus', {'id': cartContent.id}) }}" class="btn btn-secondary">+</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ cartContent.product.price|number_format(2, ',', ' ') }} €</td>
+                        <td>{{ (cartContent.product.price * cartContent.quantity)|number_format(2, ',', ' ') }} €</td>
+                        {% if cart.state == false %}
+                            <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
 
         {% if cartContents is not empty %}
-            {% for cartContent in cartContents %}
-                <tr>
-                    <td>
-                        <img src="{{ asset('uploads/'~ cartContent.product.photo) }}" alt="{{ cartContent.product.name }} image" style="width: 50px;">
-                        <span>{{ cartContent.product.name }}</span>
-                    </td>
-                    <td>
-                        {% if cartContent.quantity > 1 and cart.state == false %}
-                            <a href="{{ path('app_cart_content_minus', {'id': cartContent.id}) }}" class="btn btn-secondary">-</a>
-                        {% endif %}
-                        {{ cartContent.quantity }}
-                        {% if cart.state == false %}
-                            <a href="{{ path('app_cart_content_plus', {'id': cartContent.id}) }}" class="btn btn-secondary">+</a>
-                        {% endif %}
-                    </td>
-                    <td>{{ cartContent.product.price|number_format(2, ',', ' ') }} €</td>
-                    <td>{{ (cartContent.product.price * cartContent.quantity)|number_format(2, ',', ' ') }} €</td>
+            <div class="total">
+                <div class="total__price">
+                    <h3>Total : {{ total|number_format(2, ',', ' ') }} €</h3>
+                </div>
+                <div class="total__actions">
                     {% if cart.state == false %}
-                        <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
+                        <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay <i class="fa-regular fa-credit-card"></i></a>
+                        {% if cartContents is not empty %}
+                            {{ include('cart/_delete_form.html.twig') }}
+                        {% endif %}
+                        <a class="btn btn-tertiary" href="{{ path('app_product_index') }}">Back to shop</a>
+                    {% else %}
+                        <a class="btn btn-tertiary" href="{{ path('app_cart_account') }}">Back to cart list</a>
                     {% endif %}
-                </tr>
-            {% endfor %}
+                </div>
+            </div>
         {% endif %}
-        </tbody>
-    </table>
-
-    {% if cartContents is not empty %}
-        <div class="total">
-            <div class="total__price">
-                <h3>Total : {{ total|number_format(2, ',', ' ') }} €</h3>
-            </div>
-            <div class="total__actions">
-                {% if cart.state == false %}
-                    <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay <i class="fa-regular fa-credit-card"></i></a>
-                    {% if cartContents is not empty %}
-                        {{ include('cart/_delete_form.html.twig') }}
-                    {% endif %}
-                    <a class="btn btn-tertiary" href="{{ path('app_product_index') }}">Back to shop</a>
-                {% else %}
-                    <a class="btn btn-tertiary" href="{{ path('app_cart_account') }}">Back to cart list</a>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
 </section>
 
 {% endblock %}
