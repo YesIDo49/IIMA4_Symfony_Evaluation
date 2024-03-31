@@ -4,9 +4,9 @@
 
 {% block body %}
 <div class="example-wrapper">
-    <h1>Super Admin Page</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Super Admin Dashboard</h1>
 
-    <h2>User List</h2>
+    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>User List</h2>
     <table class="table">
         <thead>
         <tr>
@@ -31,8 +31,7 @@
         </tbody>
     </table>
 
-    <h2>Today's New User</h2>
-
+    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Today's new Users</h2>
     <table class="table">
         <thead>
         <tr>
@@ -63,7 +62,7 @@
         </tbody>
     </table>
 
-    <h2>Unpurchased carts :</h2>
+    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Unpaid carts</h2>
     <table class="table">
         <thead>
         <tr>
@@ -81,7 +80,7 @@
                 <td>{{ cart.user.name }} {{ cart.user.firstname }}</td>
                 <td>{{ cart.user.email }}</td>
                 
-                <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a></td>
+                <td><a href="{{ path('app_cart_show', {'id': cart.id}) }}" class="btn btn-secondary">Show</a></td>
             </tr>
         {% endfor %}
         </tbody>
