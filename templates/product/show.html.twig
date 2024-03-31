@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
             </tr>
             <tr>
                 <th>Stock</th>

@@ -17,7 +17,7 @@
                 <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image" class="card-product__img">
                 <div class="card-product__content">
                     <h3>{{ product.name }}</h3>
-                    <p>{{ product.price }} €</p>
+                    <p>{{ product.price|number_format(2, ',', ' ') }} €</p>
                     {% if product.stock > 0 %}
                         <h5>Stock: {{ product.stock }}</h5>
 
