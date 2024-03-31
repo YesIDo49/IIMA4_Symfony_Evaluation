@@ -7,7 +7,7 @@ body {
   overflow-x: hidden;
 }
 
-p, ul {
+p, ul, h3 {
   margin-bottom: 0;
 }
 
@@ -38,6 +38,50 @@ main {
   margin-right: 0.5rem;
 }
 
+.card-product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 16rem;
+}
+.card-product__img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+.card-product__content {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+  color: #5c4c45;
+  text-decoration: none;
+}
+.card-product__content h3 {
+  font-size: 1.2rem;
+}
+.card-product__content h5 {
+  font-size: 0.8rem;
+  color: #999;
+}
+.card-product__content__links {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 header {
   background-color: #5C4B43;
   color: #FFE963;
@@ -49,6 +93,7 @@ header .navbar {
   justify-content: space-between;
   gap: 0;
   flex-direction: row;
+  flex-wrap: nowrap;
   padding: 1.5rem 13rem;
 }
 header .navbar__logo {
@@ -57,7 +102,7 @@ header .navbar__logo {
   justify-content: center;
   gap: 0;
   flex-direction: row;
-  max-width: 30%;
+  flex-wrap: nowrap;
 }
 header .navbar__logo__img {
   display: flex;
@@ -99,6 +144,7 @@ header .navbar__menu {
   justify-content: center;
   gap: 1rem;
   flex-direction: row;
+  flex-wrap: nowrap;
   list-style: none;
   font-size: 1.1rem;
 }
@@ -135,6 +181,16 @@ header .navbar__menu a:hover {
   color: white;
   font-size: 14px;
   text-align: center;
+}
+
+.list-products {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 /*# sourceMappingURL=app.css.map */

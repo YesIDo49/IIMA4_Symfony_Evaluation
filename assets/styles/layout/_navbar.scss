@@ -7,7 +7,6 @@ header{
     padding: 1.5rem 13rem;
     &__logo{
       @include flex(center);
-      max-width: 30%;
 
       &__img{
         display: flex;

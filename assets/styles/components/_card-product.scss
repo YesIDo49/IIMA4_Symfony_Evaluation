@@ -1,0 +1,33 @@
+.card-product{
+  @include flex(center, center, 1rem, column);
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 16rem;
+
+  &__img{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+  }
+
+  &__content{
+    @include flex(start, center, 0.5rem, column);
+    width: 100%;
+    color: $color-text;
+    text-decoration: none;
+
+    h3{
+      font-size: 1.2rem;
+    }
+
+    h5{
+      font-size: 0.8rem;
+      color: $color-text-light;
+    }
+
+    &__links{
+      @include flex(start, center, 0.5rem);
+    }
+  }
+}

@@ -5,17 +5,25 @@
 {% block body %}
     <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodies</h1>
 
-    <section class="d-flex justify-content-around m-auto">
+    <section class="list-products">
         {% for product in products %}
-            <div class="card p-3">
-                <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }}" style="width: 250px;">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.price }} €</p>
-                {% if product.stock > 0 %}
-                    <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
-                {% else %}
-                    <p>Out of stock</p>
-                {% endif %}
+            <div class="card-product">
+                <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image" class="card-product__img">
+                <div class="card-product__content">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price }} €</p>
+                    {% if product.stock > 0 %}
+                        <h5>Stock: {{ product.stock }}</h5>
+
+                        <div class="card-product__content__links">
+                            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
+                            <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">Show Product</a>
+                        </div>
+                    {% else %}
+                        <p>Out of stock</p>
+                    {% endif %}
+
+                </div>
 
             </div>
         {% else %}
