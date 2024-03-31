@@ -66,8 +66,8 @@ class AppFixtures extends Fixture
         $product->setDescription('Bring home your very own Fluffy mascot Waddle Dee. This adorable plush toy is perfect for Kirby fans of all ages.');
         $product->setPhoto('product7.jpg');
         $manager->persist($product);
-        $product = new Product();
 
+        $product = new Product();
         $product->setName('Kirky car cheese cake key chain');
         $product->setPrice(mt_rand(1000, 10000) / 100);
         $product->setStock(rand(0, 10));
@@ -75,6 +75,7 @@ class AppFixtures extends Fixture
         $product->setPhoto('product8.jpg');
         $manager->persist($product);
 
+        $product = new Product();
         $product->setName('Kirky coffee mug');
         $product->setPrice(mt_rand(1000, 10000) / 100);
         $product->setStock(rand(0, 10));
@@ -82,6 +83,7 @@ class AppFixtures extends Fixture
         $product->setPhoto('product9.jpg');
         $manager->persist($product);
 
+        $product = new Product();
         $product->setName('Kirky chef plushie');
         $product->setPrice(mt_rand(1000, 10000) / 100);
         $product->setStock(rand(0, 10));
@@ -89,6 +91,7 @@ class AppFixtures extends Fixture
         $product->setPhoto('product10.jpg');
         $manager->persist($product);
 
+        $product = new Product();
         $product->setName('Kirky tea can');
         $product->setPrice(mt_rand(1000, 10000) / 100);
         $product->setStock(rand(0, 10));
@@ -96,6 +99,7 @@ class AppFixtures extends Fixture
         $product->setPhoto('product11.jpg');
         $manager->persist($product);
 
+        $product = new Product();
         $product->setName('Kirky Stainless steel tumbler');
         $product->setPrice(mt_rand(1000, 10000) / 100);
         $product->setStock(rand(0, 10));
