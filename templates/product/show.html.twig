@@ -13,7 +13,11 @@
 
     <div class="product">
         <div class="product__img">
-            <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image">
+            {% if product.photo is not null %}
+                <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image">
+            {% else %}
+                <img src="{{ asset('uploads/placeholder.png') }}" alt="{{ product.name }} placeholder">
+            {% endif %}
         </div>
 
         <div class="product__content">
