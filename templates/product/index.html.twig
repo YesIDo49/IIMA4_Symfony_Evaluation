@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Shop{% endblock %}
+{% block title %}{{ 'products.title' | trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodies</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>{{ 'products.goodies' | trans }}</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
         <div class="admin-actions">
-            <a class="btn btn-primary" href="{{ path('app_product_new') }}">Create new product</a>
+            <a class="btn btn-primary" href="{{ path('app_product_new') }}">{{ 'product.add_product' | trans }}</a>
         </div>
     {% endif %}
 
@@ -17,22 +17,22 @@
                 <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image" class="card-product__img">
                 <div class="card-product__content">
                     <h3>{{ product.name }}</h3>
-                    <p>{{ product.price|number_format(2, ',', ' ') }} €</p>
+                    <p>{{ product.price|number_format(2, ',', ' ') }} {{ 'product.currency' | trans }}</p>
                     {% if product.stock > 0 %}
-                        <h5>Stock: {{ product.stock }}</h5>
+                        <h5>{{ 'product.stock' | trans }}: {{ product.stock }}</h5>
                     {% else %}
-                        <h5>Out of stock</h5>
+                        <h5>{{ 'product.out_of_stock' | trans }}</h5>
                     {% endif %}
 
                     <div class="card-product__content__links">
-                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart <i class="fa-solid fa-cart-plus"></i></a>
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">Show Product</a>
+                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">{{ 'product.add_to_cart' | trans }} <i class="fa-solid fa-cart-plus"></i></a>
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">{{ 'product.show_product' | trans }}</a>
                     </div>
                 </div>
 
             </div>
         {% else %}
-            <p>No products found</p>
+            <p>{{ 'products.empty' | trans }}</p>
         {% endfor %}
     </section>
 {% endblock %}

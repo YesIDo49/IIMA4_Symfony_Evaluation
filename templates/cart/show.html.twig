@@ -3,19 +3,19 @@
 {% block title %}Cart{% endblock %}
 
 {% block body %}
-    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Cart n°{{ cart.id }}</h1>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>{{ 'cart.title' | trans({'%id%': cart.id}) }}</h1>
 
-    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Content ( {{ cart.state ? 'Paid' : 'Ongoing' }} {{ cart.state == true and cart.purchaseDate ? 'on the ' ~ cart.purchaseDate|date('Y-m-d H:i:s') : '' }} )</h2>
+    <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>{{ 'cart_content.title' | trans }} ( {{ cart.state ? 'cart.status.paid' | trans : 'cart.status.ongoing' | trans }} {{ cart.state == true and cart.purchaseDate ? 'on the ' ~ cart.purchaseDate|date('Y-m-d H:i:s') : '' }} )</h2>
     <section class="table-layout">
         <table class="table">
             <thead>
             <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Unit price</th>
-                <th>Total price</th>
+                <th>{{ 'cart_content.product' | trans }}</th>
+                <th>{{ 'cart_content.quantity' | trans }}</th>
+                <th>{{ 'cart_content.unit_price' | trans }}</th>
+                <th>{{ 'cart_content.total_price' | trans }}</th>
                 {% if cart.state == false and cart.user.id == currentUser.id %}
-                    <th>Actions</th>
+                    <th>{{ 'cart_content.actions' | trans }}</th>
                 {% endif %}
             </tr>
             </thead>
@@ -23,7 +23,7 @@
 
             {% if cart.cartContents is empty %}
                 <tr>
-                    <td colspan="6">Your cart is empty</td>
+                    <td colspan="6">{{ 'cart.empty' | trans }}</td>
                 </tr>
             {% endif %}
 
@@ -43,8 +43,8 @@
                                 <a href="{{ path('app_cart_content_plus', {'id': cartContent.id}) }}" class="btn btn-secondary">+</a>
                             {% endif %}
                         </td>
-                        <td>{{ cartContent.product.price|number_format(2, ',', ' ') }} €</td>
-                        <td>{{ (cartContent.product.price * cartContent.quantity)|number_format(2, ',', ' ') }} €</td>
+                        <td>{{ cartContent.product.price|number_format(2, ',', ' ') }} {{ 'product.currency' | trans }}</td>
+                        <td>{{ (cartContent.product.price * cartContent.quantity)|number_format(2, ',', ' ') }} {{ 'product.currency' | trans }}</td>
                         {% if cart.state == false and cart.user.id == currentUser.id %}
                             <td>{{ include('/cart_content/_delete_form.html.twig') }}</td>
                         {% endif %}
@@ -57,17 +57,17 @@
         {% if cartContents is not empty %}
             <div class="total">
                 <div class="total__price">
-                    <h3>Total : {{ total|number_format(2, ',', ' ') }} €</h3>
+                    <h3>{{ 'cart.total' | trans }} : {{ total|number_format(2, ',', ' ') }} {{ 'cart.currency' | trans }}</h3>
                 </div>
                 <div class="total__actions">
                     {% if cart.state == false and cart.user.id == currentUser.id  %}
                         {% if cartContents is not empty and cart.user.id == currentUser.id %}
-                            <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">Pay <i class="fa-regular fa-credit-card"></i></a>
+                            <a class="btn btn-secondary" href="{{ path('app_cart_pay', {'id': cart.id}) }}">{{ 'cart.pay' | trans }} <i class="fa-regular fa-credit-card"></i></a>
                             {{ include('cart/_delete_form.html.twig') }}
                         {% endif %}
-                        <a class="btn btn-tertiary" href="{{ path('app_product_index') }}">Back to shop</a>
+                        <a class="btn btn-tertiary" href="{{ path('app_product_index') }}">{{ 'cart.back_to.products' | trans }}</a>
                     {% else %}
-                        <a class="btn btn-tertiary" href="{{ path('app_cart_account') }}">Back to cart list</a>
+                        <a class="btn btn-tertiary" href="{{ path('app_cart_account') }}">{{ 'cart.back_to.carts' | trans }}</a>
                     {% endif %}
                 </div>
             </div>

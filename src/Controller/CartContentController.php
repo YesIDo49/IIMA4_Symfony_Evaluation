@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Cart;
 use App\Entity\CartContent;
-use App\Form\CartContentType;
-use App\Repository\CartContentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,13 +15,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/cart/content')]
 class CartContentController extends AbstractController
 {
-    #[Route('/', name: 'app_cart_content_index', methods: ['GET'])]
-    public function index(CartContentRepository $cartContentRepository): Response
-    {
-        return $this->render('cart_content/index.html.twig', [
-            'cart_contents' => $cartContentRepository->findAll(),
-        ]);
-    }
 
     #[Route('/new', name: 'app_cart_content_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ProductController $product): Response
@@ -31,7 +22,6 @@ class CartContentController extends AbstractController
         $cartContent = new CartContent();
         $cartContent->setCart($this->getUser());
         $cartContent->setQuantity(1);
-//        $cartContent->setProduct($product->id);
 
         $entityManager->persist($cartContent);
         $entityManager->flush();
@@ -99,32 +89,6 @@ class CartContentController extends AbstractController
 
         return $this->redirectToRoute('app_product_index');
     }
-
-    #[Route('/{id}', name: 'app_cart_content_show', methods: ['GET'])]
-    public function show(CartContent $cartContent): Response
-    {
-        return $this->render('cart_content/show.html.twig', [
-            'cart_content' => $cartContent,
-        ]);
-    }
-
-    // #[Route('/{id}/edit', name: 'app_cart_content_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, CartContent $cartContent, EntityManagerInterface $entityManager): Response
-    // {
-    //     $form = $this->createForm(CartContentType::class, $cartContent);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('cart_content/edit.html.twig', [
-    //         'cart_content' => $cartContent,
-    //         'form' => $form,
-    //     ]);
-    // }
 
     #[Route('/{id}/add', name: 'app_cart_content_plus', methods: ['GET', 'POST'])]
     public function add(CartContent $cartContent, EntityManagerInterface $entityManager): Response

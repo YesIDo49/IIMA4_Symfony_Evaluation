@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-actions">
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-        <a href="{{ path('app_cart_account') }}" class="btn btn-tertiary">Back to account</a>
+        <button class="btn btn-primary">{{ button_label|default('user.update' | trans) }}</button>
+        <a href="{{ path('app_cart_account') }}" class="btn btn-tertiary">{{ 'user.back' | trans }}</a>
     </div>
 {{ form_end(form) }}

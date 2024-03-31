@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
-use App\Form\CartType;
 use App\Repository\CartRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,19 +32,6 @@ class CartController extends AbstractController
         } else {
           return $this->redirectToRoute('app_cart_show', ["id" => $cart->getId()], Response::HTTP_SEE_OTHER);
         }
-    }
-
-    #[IsGranted('ROLE_SUPER_ADMIN')]
-    #[Route('/all', name: 'app_cart_show_all', methods: ['GET'])]
-    public function showAll(CartRepository $cartRepository): Response
-    {
-      return $this->render('cart/index.html.twig', [
-        'carts' => $cartRepository->createQueryBuilder('c')
-          ->where('c.state = 0')
-          ->orderBy('c.purchase_date', 'DESC')
-          ->getQuery()
-          ->getResult()
-      ]);
     }
 
     #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
@@ -83,39 +69,17 @@ class CartController extends AbstractController
       ]);
     }
 
-    // #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
-    // {
-    //   $form = $this->createForm(CartType::class, $cart);
-    //   $form->handleRequest($request);
-
-    //   if ($form->isSubmitted() && $form->isValid() && !$cart->isState()) {
-    //       $entityManager->flush();
-
-    //       return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-    //   }
-
-    //   return $this->render('cart/edit.html.twig', [
-    //       'cart' => $cart,
-    //       'form' => $form,
-    //   ]);
-    // }
-
     #[Route('/{id}/pay', name: 'app_cart_pay', methods: ['GET', 'POST'])]
     public function pay(Cart $cart, EntityManagerInterface $entityManager): Response
     {
       $cart->setState(true);
       $cart->setPurchaseDate(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
 
-      // Récupérer les éléments du panier
       $cartContents = $cart->getCartContents();
 
-      // Mettre à jour le stock pour chaque produit dans le panier
       foreach ($cartContents as $cartContent) {
           $product = $cartContent->getProduct();
-          // Vérifier si le produit existe (c'est une bonne pratique)
           if ($product instanceof Product) {
-              // Réduire le stock du produit par la quantité commandée
               $product->setStock($product->getStock() - $cartContent->getQuantity());
               $entityManager->persist($product);
           }
