@@ -1,60 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}Product {{ product.name }}{% endblock %}
 
 {% block body %}
-    <h1>Product</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                {% if product.stock == 0 %}
-                    <td>Out of stock</td>
-                {% else %}
-                    <td>{{ product.stock }}</td>
-                {% endif %}
-
-            </tr>
-            <tr>
-                <th>Photo</th>
-                <td>
-                    <img src="{{ asset('uploads/'~ product.photo) }}" style="max-width: 100px;">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    {% if is_granted('ROLE_USER') %}
-        {% if product.stock > 0 %}
-            <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-primary">Add to cart</a>
-        {% endif %}
-    {% endif %}
-
-    <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">Back</a>
+    <h1 class="title"><span><img src="{{ asset('img/icons/icon-stick.png') }}" alt="title-icon"></span>Goodie</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <h2>Edit Product</h2>
+        <div class="admin-actions">
+            {{ include('product/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
+
+    <div class="product">
+        <div class="product__img">
+            <img src="{{ asset('uploads/'~ product.photo) }}" alt="{{ product.name }} image">
+        </div>
+
+        <div class="product__content">
+            {% if is_granted('ROLE_ADMIN') %}
+                <p>( Product id : {{ product.id }} )</p>
+            {% endif %}
+            <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop-white.png') }}" alt="title-icon"></span>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <h3>{{ product.price|number_format(2, ',', ' ') }} €</h3>
+            {% if product.stock == 0 %}
+                <h4>Out of stock</h4>
+            {% else %}
+                <h4>Current stock : {{ product.stock }}</h4>
+            {% endif %}
+            <div class="product__content__actions">
+                {% if is_granted('ROLE_USER') %}
+                    {% if product.stock > 0 %}
+                        <a href="{{ path('app_add_to_cart', {'productId': product.id}) }}" class="btn btn-secondary">Add to cart</a>
+                    {% endif %}
+                {% endif %}
+                <a href="{{ path('app_product_index') }}" class="btn btn-tertiary">Back</a>
+            </div>
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <h2 class="subtitle"><span><img src="{{ asset('img/icons/icon-lollipop.png') }}" alt="title-icon"></span>Edit Product</h2>
 
         {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
-
-        <h2>Delete Product</h2>
-        {{ include('product/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}

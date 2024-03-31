@@ -1,0 +1,40 @@
+.product{
+  @include flex(center, center, 1rem);
+  background-color: $bg-secondary;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 2rem 3rem;
+  width: 100%;
+  margin: 1rem 0 3rem;
+
+  &__img{
+    width: 50%;
+    object-fit: contain;
+
+    img{
+      border-radius: 0.25rem;
+    }
+  }
+
+  &__content{
+    @include flex(start, center, 0.5rem, column);
+    width: 50%;
+    text-decoration: none;
+
+    h3{
+      font-size: 1.5rem;
+      text-align: end;
+      margin: 1rem 0;
+      color: $bg-primary;
+    }
+
+    h4{
+      font-size: 0.9rem;
+      color: $color-text-light;
+    }
+
+    &__links{
+      @include flex(end, center, 0.5rem);
+    }
+  }
+}

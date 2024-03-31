@@ -21,6 +21,7 @@ main {
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
+  text-transform: capitalize;
 }
 .title img {
   max-width: 4rem;
@@ -32,6 +33,7 @@ main {
   font-weight: 500;
   margin-bottom: 1rem;
   margin-left: 1rem;
+  text-transform: capitalize;
 }
 .subtitle img {
   max-width: 3rem;
@@ -245,6 +247,56 @@ header .navbar__menu a:hover {
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: #5C4B43;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 2rem 3rem;
+  width: 100%;
+  margin: 1rem 0 3rem;
+}
+.product__img {
+  width: 50%;
+  object-fit: contain;
+}
+.product__img img {
+  border-radius: 0.25rem;
+}
+.product__content {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 50%;
+  text-decoration: none;
+}
+.product__content h3 {
+  font-size: 1.5rem;
+  text-align: end;
+  margin: 1rem 0;
+  color: #FFE963;
+}
+.product__content h4 {
+  font-size: 0.9rem;
+  color: #999;
+}
+.product__content__links {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 /*# sourceMappingURL=app.css.map */
